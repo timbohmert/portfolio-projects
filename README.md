@@ -1,2 +1,1 @@
-# portfolio-projects
- projects developed and tools gained during dev education
+Variety of projects highlighting the skills of Tim Bohmert, including nunchuck skills.
