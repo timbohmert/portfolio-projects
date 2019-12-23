@@ -1,12 +1,17 @@
-.title {
-    font-family: 'VT323', monospace;
-    color: #000000;
-}
+
 
 nav {
     font-family: Arial, Helvetica, sans-serif;
-    color: #191919;
+    background-color: #191919;
     text-align: right;
+    margin: 0px 0px 10px 0px 0px;
+
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 2px 15px 2px 2px
 }
 
 main {
@@ -16,3 +21,10 @@ main {
     margin: 5%;
     padding: 10px 20px 10px 50px;
   }
+
+  .title {
+    font-family: 'VT323', monospace;
+    color: #000000;
+}
+
+

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CSS Spacing Cheat Sheet</title>
     <link rel="stylesheet" type="text/css" href="./../resources/stylesheets/gen-style.css">
-    <link rel="stylesheet" href="./../resources/stylesheets/cheatSheet.css">
+    <link rel="stylesheet" href="./../resources/stylesheets/projects_cheatSheet.css">
 </head>
 <body>
     <header>
@@ -29,25 +29,56 @@
                 <p class="spacing-description">
                     CSS has tools to create space between the differnt elements spacing between one another. The two main spacing tools are <b>margin</b> and <b>padding.</b> This cheat sheet will overview these two tools, and some of the units used to implement them.
                 </p>
-                <br>
                 <!--margin and padding description. To-do: add tabs for second line of syntax, and add figure of margin and padding-->
                 <h4>margin</h4>
-                <p class="spacing-description">Controls amount of space between element’s content and its border.</p>
+                <p class="spacing-description">Controls amount of space between element’s border and surrounding elements. CSS has ability to control the margin at the top, bottom, left, and right sides of the element.</p>
                 <h5>Syntax:</h5>
-                <p class="syntax">
-                    selector_name {<br>    margin: <i>top</i>px <i>left</i>px <i>bottom</i>px <i>right</i>px;<br>}
-                </p>
-                <br>
+                <p class="syntax">selector_name {<br> &emsp; margin: <i>top</i>px <i>left</i>px <i>bottom</i>px <i>right</i>px;<br>}</p>
                 <h4>padding</h4>
-                <p class="spacing-description">Controls amount of space between element’s border and surrounding elements.</p>
+                <p class="spacing-description">Controls amount of space between element’s content and its border. Similar to margin, CSS offers the tools to control the padding at each side of the element.</p>
                 <h5>Syntax:</h5>
-                <p class="syntax">
-                    selector_name {<br>emsp padding: <i>top</i>px <i>left</i>px <i>bottom</i>px <i>right</i>px;</nbsp><br>}
-                </p>
+                <p class="syntax">selector_name {<br> &emsp; padding: <i>top</i>px <i>left</i>px <i>bottom</i>px <i>right</i>px;</nbsp><br>}</p>
             </article>
+            <!--Image of margin and padding. Image source: https://www.w3.org/TR/CSS2/box.html. To-do: Create figcaption for the image-->
+            <figure>
+                <img id="spacing_diagram" src="./../resources/media/projects_cheatSheet_spacing.png" alt="Diagram of CSS spacing.">
+                <figcaption>Fig. 1: Diagram depicting the relationship of an element to its margin, padding, and border. The margin is illustrated outside of the element. The padding is displayed within the element and its contents. The border is at the edge of the element.</figcaption>
+            </figure>
             <!--Table with the different units for spacing. To-do: look into how to combine cells, look into definition of each of the units-->
+            <br>
             <table>
-                
+                <h4>spacing units</h4>
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Unit</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="3">Absolute: tie to specific a physical unit of length. Not recommended for screen use.</td>
+                        <td>Pixels (px)</td>
+                        <td>Equals one pixel on low resolution, and equals multiple pixels on high resolution or with print.</td>
+                    </tr
+                    <tr>
+                        <td>Inches (in)</td>
+                        <td>In print or digital, equals to one inch on the viewing source.</td>
+                    </tr>
+                    <tr>
+                        <td>Milimeters (mm)</td>
+                        <td>In print or digital, equals to one inch on the viewing source.</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">Relative: relative to another length value</td>
+                        <td>rem</td>
+                        <td>relative to font-size of the root element.</td>
+                    </tr>
+                    <tr>
+                        <td>em</td>
+                        <td>relative to the font-size of the element (2em means 2 times the size of the current font)</td>
+                    </tr>
+                </tbody>
             </table>
         </section>
     </main>

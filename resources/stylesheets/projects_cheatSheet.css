@@ -1,0 +1,49 @@
+main {
+    width: 75%;
+    margin: auto;
+}
+
+table, th, td {
+    border: 1px solid #555;
+    border-collapse: collapse;
+    padding: 1px 5px 1px 5px;
+}
+
+table {
+    width: 75%;
+    margin: 0px 0px 0px 0px;
+}
+
+thead {
+    background-color: #000000;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+tbody {
+    background-color: #e3e3e3;
+    color: #191919;
+}
+
+h4, h5 {
+    margin: 10px 00px 5px 00px;
+}
+
+.syntax {
+    color: limegreen;
+    background-color: #000000;
+    padding: 7px 5px 7px 5px;
+    margin: 0px 0px 0px 0px;
+    width: 500px;
+}
+
+.syntax i {
+    color: #ffffff;
+}
+
+#spacing_diagram {
+    width: 66%;
+    border: 2px solid #191919;
+    margin: 20px 0px 0px 0px;
+}
+
