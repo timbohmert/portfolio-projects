@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Financial Survery</title>
+    <link rel="stylesheet" type="text/css" href="./../resources/stylesheets/gen-style.css">
+    <link rel="stylesheet" type="text/css" href="./../resources/stylesheets/projects_financialSurvery.css">
+</head>
+<body>
+    <header>
+        <header>
+            <h1 class="title">[insert_cool_title] | projects</h1>
+            <nav>
+                <a href="">home</a>
+                <!--<a href="">about me</a>-->
+                <a href="">projects</a>
+                <a href="">résumé</a>
+                <a href="">contact me</a>
+                <a href="https://github.com/timbohmert">GitHub</a>
+                <a href="https://www.linkedin.com/in/tim-bohmert-a40b5992/">LinkedIn</a>
+            </nav>
+        </header>
+    </header>
+    <main id="main">
+        <section>
+            <h1 id="title">Future Financial Goals</h1>
+            <p id="description">Take some time to document your monetary goals for the next twelve month period.</p>
+            <form id="survey-form">
+                <!--Questions for name and email-->
+                <div class=question-group>
+                    <label id="name-label" for="name">Name:</label>
+                    <br>
+                    <input type="text" placeholder="type your name here" id="name" name="name" required>
+                </div>
+                <div class=question-group>
+                    <label id="email-label" for="email">Email:</label><br>
+                    <input type="email" id="email" name="email" placeholder="your email here" required>
+                    <br>
+                </div>
+                <!--Question for financial literacy-->
+                <div class=question-group>
+                    <label id="number-label" for="number">Rate your financial literacry (1: novice, and 5: expert):</label>
+                    <br>
+                    <input type="number" id="number" name="number" min="1" max="5" placeholder="your literacy rating ">
+                </div>
+                <!--Question for employment-->
+                <div class=question-group>
+                    <label id="employment-label" for="employment">Describe your current employment (optional):</label>
+                    <br>
+                    <select id="dropdown" name="employment" required>
+                        <option value="Full-time"></option>
+                        <option value="Part Time"></option>
+                        <option value="Contract"></option>
+                        <option value="Freelance"></option>
+                        <option value="Un-employed"></option>
+                    </select>
+                </div>
+                <br>
+                <!--Question for current investments-->
+                <div class=question-group>
+                    <p id="savings-label">Your current methods for saving or investing (optional):</p>
+                    <label for="savings"><input type="checkbox" name="savings" value="standard-401K" id="standard-401K">Standard 401k</label><br>
+                    <label for="savings"><input type="checkbox" name="savings" value="roth-401k" id="roth-401k">Roth 401k</label><br>
+                    <label for="savings"><input type="checkbox" name="savings" value="ira" id="ira">IRA</label><br>
+                    <label for="savings"><input type="checkbox" name="savings" value="roth-ira" id="roth-ira">Roth IRA</label><br>
+                    <label for="savings"><input type="checkbox" name="savings" value="personal-investment" id="personal-investment">Personal Investment Account</label><br>
+                    <label for="savings"><input type="checkbox" name="savings" value="savings-account" id="savings-account">Savings Account</label><br>
+                    <label for="savings"><input type="checkbox" name="savings" value="other" id="other">Other</label><br>
+                </div>
+                <!--Question for  motivators-->
+                <div class="question-group">
+                    <p id="motivation-label">Your biggest motivator to save:</p>
+                    <label for="motivator"><input type="radio" name="motivator" value="retirement" id="retirement">Retirement</label><br>
+                    <label for="motivator"><input type="radio" name="motivator" value="other-investments" id="other-investments">Other Investment Opportunities</label><br>
+                    <label for="motivator"><input type="radio" name="motivator" value="future-expense" id="future-expense">Future Expense (child, wedding, vacation)</label><br>
+                    <label for="motivator"><input type="radio" name="motivator" value="other" id="other">Other</label>
+                </div>
+                <div class="question-group">
+                    <p>What motto best describes your finances?</p>
+                    <textarea name="motto" id="motto" cols="30" rows="5">type your motto here</textarea>
+                </div>
+                <div class="question-group">
+                    <input type="submit" id="submit" value="Submit Form">
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
+
+
+  
