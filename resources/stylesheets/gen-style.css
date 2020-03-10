@@ -9,16 +9,13 @@
     color: #000000;
     padding: 1rem 2rem;
 }
-=======
 @import url(https://fonts.googleapis.com/css?family=VT323&display=swap);
->>>>>>> master
 
 nav {
     font-family: Arial, Helvetica, sans-serif;
     background-color: #191919;
     text-align: right;
     margin: 0px 0px 10px 0px 0px;
-
 }
 
 nav a {
@@ -35,25 +32,46 @@ main {
     padding: 10px 20px 10px 50px;
 }
 
+#portfolio-header {
+    z-index: 10;
+    position: fixed;
+    display: block;
+    width: 100%;
+    background-color: #ffffff;
+    top: 0px;
+}
+
 #home-page {
-    width: 75%;
+    width: 100%;
     margin: 0 auto;
 }
 
 #about-me-title {
-    width: 50%;
+    width: 500px;
     font-weight: 700;
     padding: 0.5rem 0rem;
+    margin: 0px auto;
+}
+
+.title-object {
+    display: inline-block;
+    width: 240px;
+    box-sizing: border-box;
+}
+
+#about-me-title h2 {
+    text-align: right;
+    font-size: 3rem;
 }
 
 #about-me-title span {
     font-weight: 300;
 }
 
-#home-page img {
-    width: 33%;
+#about-me-title img {
+    width: 100%;
     border: 2px solid #191919;
-    display: block;
+    display: inline-block;
     margin: 0 auto;
 }
 
@@ -74,5 +92,11 @@ main {
     width: 10%
 }
 
+#project-links {
+    margin: 50px 0px;
+  }
 
+#project-links p{
+    margin: 5px 0px;
+}
 
