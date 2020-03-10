@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Planks Home</title>
+    <link rel="stylesheet" type="text/css" href="./../resources/stylesheets/gen-style.css">
+    <link rel="stylesheet" type="text/css" href="./../resources/stylesheets/projects_planksLandingPage.css">
+</head>
+<body>
+    <header id="portfolio-header">
+        <h1 class="title">[insert_cool_title] | projects</h1>
+        <nav>
+            <a href="">home</a>
+            <!--<a href="">about me</a>-->
+            <a href="">projects</a>
+            <a href="">résumé</a>
+            <a href="">contact me</a>
+            <a href="https://github.com/timbohmert">GitHub</a>
+            <a href="https://www.linkedin.com/in/tim-bohmert-a40b5992/">LinkedIn</a>
+        </nav>
+    </header>
+    
+    <!--Header for the project page. Need to determine how to link to additional section within the page-->
+    <header id="header">
+        <img src="./../resources/media/plankslogo.png" alt="plank's logo" id="header-img">
+        <nav id="nav-bar">
+            <a href="#about-planks" class="nav-link">About Planks</a>
+            <a href="#user-testimonials" class="nav-link">User Testimonials</a>
+            <a href="#product-packages" class="nav-link">Product Packages</a>
+        </nav>
+    </header>
+    
+    <main id="planks-home-main">
+        <!--Section to describe planks. Include image of planks to side of -->
+        <section id="about-planks">
+            <article id="planks-description">
+                <h2 class="article-title">What is Planks?</h2>
+                <p>Planks is a web application that lets you manage your favorite or "need to know" websites. Planks allows you to store your websites in one central location, that way if you are on a different computer, you can still access all your stored websites with Planks.</p>
+            </article>
+        </section>
+        <section id="user-testimonials">
+            <article id="user-quotes">
+                <h2 class="article-title">What are users saying about Planks?</h2>
+                <div class="testimonial" id="user-1">
+                    <p>"I became so obsessed with Planks that my family presented me with an ultimatum, 'You can either chose between Planks or your family!' Been using Planks every day since and never looked back!"</p>
+                    <p class="user"><i>~User One</i></p>
+                </div>
+                <div class="testimonial" id="user-2">
+                    <p class="testimonial">"Some say that sliced bread was the best invention out there, but I prefer to have my peanut butter and jelly on Planks!"</p>
+                    <p class="user"><i>~User Two</i></p>
+                </div>
+                <div class="testimonial" id="user-3">
+                    <p class="testimonial">"Planks has been so helpful with my productivity, that I found the last page of the interwebs."</p>
+                    <p class="user"><i>~User Three</i></p>
+                </div>
+            </article>
+            <!--Testimonial video here? Difference between video and iframe attribute-->
+            <video src="" id="video" all></video>
+            <iframe src="" frameborder=""></iframe>
+        </section>
+        <section id="product-packages">
+            <h2 class="article-title">Available Packages</h2>
+            <div id="diamond" class="package-description">
+                <h3 class="product-name">DIAMOND</h3>
+                <h2>$30/month</h2>
+                <ul class="product-features">
+                    <li>5 total planks</li>
+                    <li>5 new slivers per month</li>
+                    <li>Smoke signals enabled</li>
+                    <li>Standard customer support</li>
+                    <button class="btn">Select</button>
+                </ul>
+            </div>
+            <div id="super-diamond" class="package-description">
+                <h3 class="product-name">SUPER DIAMOND</h3>
+                <h2>$40/month</h2>
+                <ul class="product-features">
+                    <li>10 total planks</li>
+                    <li>10 new slivers per month</li>
+                    <li>Email intergration enabled</li>
+                    <li>Premium customer support</li>
+                    <button class="btn">Select</button>
+            </div>
+            <div id="ultra-diamond-2000" class="package-description">
+                <h3 class="product-name">ULTRA DIAMOND 2000</h3>
+                <h2>$30/month</h2>
+                <ul class="product-features">
+                    <li>Unlimited total planks</li>
+                    <li>Unlimited total slivers</li>
+                    <li>Email intergration enabled</li>
+                    <li>Josh Customer Support</li>
+                    <button class="btn">Select</button>
+            </div>
+            <form action=" https://www.freecodecamp.com/email-submit" id="form">
+                <p>Create an account to take our assessment to see which package works best for you!</p>
+                <div id=email-input>
+                    <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                    <input type="submit" value="Get Started" class="btn">
+                </div>
+            </form>
+        </section>
+        <footer>
+
+        </footer>
+    </main>
+</body>
+</html>
