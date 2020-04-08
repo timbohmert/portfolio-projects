@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+main {
+    position: absolute;
+    top: 100px;
+}
+
 .title {
     font-family: 'VT323', monospace;
     color: #000000;
@@ -100,3 +105,20 @@ main {
     margin: 5px 0px;
 }
 
+.project-banner {
+    width: 250px;
+    display: inline-block;
+    padding: 0px 0px;
+    margin: 20px 20px;
+    background-color: #191919;
+    text-align: center;
+}
+
+.project-banner img {
+    width: 100%;
+}
+
+.project-banner a {
+    color: #ffffff;
+    text-decoration: none;
+}
