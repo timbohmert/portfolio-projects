@@ -1,3 +1,22 @@
+<<<<<<< HEAD
+=======
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    position: absolute;
+    top: 100px;
+}
+
+.title {
+    font-family: 'VT323', monospace;
+    color: #000000;
+    padding: 1rem 2rem;
+}
+>>>>>>> projectWork
 @import url(https://fonts.googleapis.com/css?family=VT323&display=swap);
 
 nav {
@@ -5,7 +24,6 @@ nav {
     background-color: #191919;
     text-align: right;
     margin: 0px 0px 10px 0px 0px;
-
 }
 
 nav a {
@@ -20,11 +38,90 @@ main {
     background-color: #ffffff;
     margin: 5%;
     padding: 10px 20px 10px 50px;
-  }
-
-  .title {
-    font-family: 'VT323', monospace;
-    color: #000000;
 }
 
+#portfolio-header {
+    z-index: 10;
+    position: fixed;
+    display: block;
+    width: 100%;
+    background-color: #ffffff;
+    top: 0px;
+}
 
+#home-page {
+    width: 100%;
+    margin: 0 auto;
+}
+
+#about-me-title {
+    width: 500px;
+    font-weight: 700;
+    padding: 0.5rem 0rem;
+    margin: 0px auto;
+}
+
+.title-object {
+    display: inline-block;
+    width: 240px;
+    box-sizing: border-box;
+}
+
+#about-me-title h2 {
+    text-align: right;
+    font-size: 3rem;
+}
+
+#about-me-title span {
+    font-weight: 300;
+}
+
+#about-me-title img {
+    width: 100%;
+    border: 2px solid #191919;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+#intro-about-me {
+    margin: 2rem auto;
+    width: 66%;
+    max-width: 800px;
+    min-width: 300px;
+}
+
+#intro-about-me p {
+    margin: 1rem 0 0 0;
+    text-align: center;
+}
+
+#intro-about-me hr {
+    margin: .75rem auto;
+    width: 10%
+}
+
+#project-links {
+    margin: 50px 0px;
+  }
+
+#project-links p{
+    margin: 5px 0px;
+}
+
+.project-banner {
+    width: 250px;
+    display: inline-block;
+    padding: 0px 0px;
+    margin: 20px 20px;
+    background-color: #191919;
+    text-align: center;
+}
+
+.project-banner img {
+    width: 100%;
+}
+
+.project-banner a {
+    color: #ffffff;
+    text-decoration: none;
+}

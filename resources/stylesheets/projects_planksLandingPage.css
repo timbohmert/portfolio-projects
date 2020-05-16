@@ -1,0 +1,60 @@
+section {
+    margin: 40px 0px;
+}
+
+#planks-home-main {
+    position: absolute;
+    top: 150px;
+}
+
+.article-title {
+    color: #fcae4e;
+    margin: 20px 0px;
+}
+
+.package-description{
+    background-color: #fcae4e;
+    display: inline-block;
+    margin: 10px 10px;
+    padding: 20px 20px;
+}
+
+#header {
+    position: fixed;
+    z-index: 2;
+    display: block;
+    background-color: #f054b2;
+    width: 100%;
+    top: 82px; 
+}
+
+#nav-bar {
+    background-color: #f054b2;
+    text-align: left;
+}
+
+#nav-bar a {
+    color: #fcae4e;
+}
+
+#form {
+    margin: 20px auto;
+    width: 100%;
+}
+
+#email-input {
+    display: block;
+    width: 211px;
+    margin: 5px auto;
+}
+
+.testimonial {
+    margin: 20px 0px 0px 0px; 
+}
+
+.user {
+    text-align: right;
+    color: #f054b2;
+}
+
+

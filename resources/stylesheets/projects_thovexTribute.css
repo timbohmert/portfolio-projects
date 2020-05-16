@@ -3,7 +3,16 @@ body {
 }
 
 img {
-    max-width: 100%;
-     display: block;
-     height: auto;
-   }
+  max-width: 100%;
+  display: block;
+  height: auto;
+  }
+
+.thovex-body {
+  padding: 10px 0px;
+}
+
+#thovex-wiki {
+  padding: 10px 0px;
+}
+
