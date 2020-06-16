@@ -12,7 +12,8 @@ class Attack:
         self.pp = pp
 
 #list of Normal type moves
-#16, moves.swift: 26, moves.thunder: 43})
+#{moves.bite: 1, moves.hydro_pump: 1, moves.bite: 20, moves.hyper_beam: 52})
+
 
 tackle = Attack('Tackle', 'normal', 'physical', 40, 100, 35)
 
@@ -48,5 +49,17 @@ thunder_shock = Attack('Thunder Shock', 'electric', 'special', 40, 100, 30)
 
 quick_attack = Attack('Quick Attack', 'normal', 'physical', 40, 100, 30)
 
-swift = Attack('Swift', 'normal', 'special', 60, 100, 30)
+swift = Attack('Swift', 'normal', 'special', 60, 100, 20)
+
+thunder = Attack('Thunder', 'electric', 'special', 110, 70, 15)
+
+headbutt = Attack('Headbutt', 'normal', 'physical', 70, 100, 15)
+
+body_slam = Attack('Body Slam', 'normal', 'physical', 85, 100, 15)
+
+double_edge = Attack('Double-Edge', 'normal', 'physical', 120, 100, 15)
+
+hyper_beam = Attack('Hyper Beam', 'normal', 'special', 150, 90, 5)
+
+splash = Attack('Splash', 'normal', 'special', 0, 100, 40)
 
