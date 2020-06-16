@@ -1,5 +1,8 @@
 #file to store all of the pokemon using imported Pokemon class
 
+#imported moves library
+import moves
+
 #class for individual pokemon and their characteristics
 class Pokemon:
     #constructor for pokemon attributes
@@ -48,25 +51,36 @@ class Pokemon:
         print("{pokemon_name}'s attack did {damage} damage to {opponent_pokemon}.".format(pokemon_name = self.name, damage = damage, opponent_pokemon = opponent_pokemon.name))
         return opponent_pokemon.lose_health(damage)
 
-        
 #dictionary of the attack multiplier for each of the pokemon types.
+attack_multiple = {
+    'grass': {'grass': 0.5, 'poison': 2.0, 'fire': 0.5, 'water': 2.0, 'electric': 0.5, 'normal': 1.0, 'flying': 0.5}, 
+    'poison': {'grass': 2.0, 'poison': 0.5, 'fire': 1.0, 'water': 1.0, 'electric': 1.0, 'normal': 1.0, 'flying': 1.0}, 
+    'fire': {'grass': 2.0, 'poison': 1.0, 'fire': 0.5, 'water': 0.5, 'electric': 1.0, 'normal': 1.0, 'flying': 1.0}, 
+    'water': {'grass': 0.5, 'poison': 1.0, 'fire': 2.0, 'water': 0.5, 'electric': 1.0, 'normal': 1.0, 'flying': 1.0}, 
+    'electric': {'grass': 0.5, 'poison': 1.0, 'fire': 1.0, 'water': 2.0, 'electric': 0.5, 'normal': 1.0, 'flying': 2.0}, 
+    'normal': {'grass': 1.0, 'poison': 1.0, 'fire': 1.0, 'water': 1.0, 'electric': 1.0, 'normal': 1.0, 'flying': 1.0}, 
+    'flying': {'grass': 2.0, 'poison': 1.0, 'fire': 1.0, 'water': 1.0, 'electric': 0.5, 'normal': 1.0, 'flying': 1.0}
+    }
+
+        
+#list of included pokemon
 bulbasaur = Pokemon('Bulbasaur', 1, 64, ['grass', 'poison'], 45, 45, False, {moves.tackle: 1, moves.vine_whip: 13, moves.razor_leaf: 27, moves.solar_beam: 48})
 
 ivysaur = Pokemon('Ivysaur', 16, 142, ['grass', 'poison'], 60, 60, False, {moves.tackle: 1, moves.vine_whip: 13, moves.razor_leaf: 27, moves.solar_beam: 48})
 
 venusaur = Pokemon('Venusaur', 32, 236, ['grass', 'poison'], 80, 80, False, {moves.tackle: 1, moves.vine_whip: 13, moves.razor_leaf: 27, moves.solar_beam: 48})
 
-charmander = Pokemon('Charmander', 1, 62, ['fire'], 39, 39, False, {moves.scratch: 1, moves.ember: 9, moves.rage: 22, moves.slash: 30, moves.flamethrower: 38, fire_spin: 46})
+charmander = Pokemon('Charmander', 1, 62, ['fire'], 39, 39, False, {moves.scratch: 1, moves.ember: 9, moves.rage: 22, moves.slash: 30, moves.flamethrower: 38, moves.fire_spin: 46})
 
-charmeleon = Pokemon('Charmeleon', 16, 142, ['fire'], 58, 58, False, {moves.scratch: 1, moves.ember: 9, moves.rage: 22, moves.slash: 30, moves.flamethrower: 38, fire_spin: 46})
+charmeleon = Pokemon('Charmeleon', 16, 142, ['fire'], 58, 58, False, {moves.scratch: 1, moves.ember: 9, moves.rage: 22, moves.slash: 30, moves.flamethrower: 38, moves.fire_spin: 46})
 
-charizard = Pokemon('Charizard', 36, 240, ['fire'], 78, 78, False, {moves.scratch: 1, moves.ember: 9, moves.rage: 22, moves.slash: 30, moves.flamethrower: 38, fire_spin: 46})
+charizard = Pokemon('Charizard', 36, 240, ['fire'], 78, 78, False, {moves.scratch: 1, moves.ember: 9, moves.rage: 22, moves.slash: 30, moves.flamethrower: 38, moves.fire_spin: 46})
 
-squirtle = Pokemon('Squirtle', 1, 63, ['water'], 44, 44, False, {moves.tackle: 1, moves.bubble: 8, moves.water_gun: 15, moves.bite: 22, moves.skull_bash: 35, hydro_pump: 42})
+squirtle = Pokemon('Squirtle', 1, 63, ['water'], 44, 44, False, {moves.tackle: 1, moves.bubble: 8, moves.water_gun: 15, moves.bite: 22, moves.skull_bash: 35, moves.hydro_pump: 42})
 
-wartortle = Pokemon('Wartotle', 16, 142, ['water'], 59, 59, False, {moves.tackle: 1, moves.bubble: 8, moves.water_gun: 15, moves.bite: 22, moves.skull_bash: 35, hydro_pump: 42})
+wartortle = Pokemon('Wartotle', 16, 142, ['water'], 59, 59, False, {moves.tackle: 1, moves.bubble: 8, moves.water_gun: 15, moves.bite: 22, moves.skull_bash: 35, moves.hydro_pump: 42})
 
-blastoise = Pokemon('Blastoise', 79, 239, ['water'], 79, 79, False, {moves.tackle: 1, moves.bubble: 8, moves.water_gun: 15, moves.bite: 22, moves.skull_bash: 35, hydro_pump: 42})
+blastoise = Pokemon('Blastoise', 79, 239, ['water'], 79, 79, False, {moves.tackle: 1, moves.bubble: 8, moves.water_gun: 15, moves.bite: 22, moves.skull_bash: 35, moves.hydro_pump: 42})
 
 pikachu = Pokemon('Pikachu', 1, 112, ['electric'], 35, 35, False, {moves.thunder_shock: 1, moves.quick_attack: 16, moves.swift: 26, moves.thunder: 43})
 

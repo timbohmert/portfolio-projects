@@ -1,5 +1,7 @@
 #file to store all of the trainers using imported Trainer class
 
+#imported pokemon and moves libraries
+
 #class for pokemon trainers
 class Trainer: 
     

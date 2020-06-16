@@ -3,7 +3,7 @@
 #attack class 
 class Attack:
     #constructor for pokemon attack moves
-    def __init__(self, name, type, category, power, accuracy, pp):
+    def __init__(self, name, typ, category, power, accuracy, pp):
         self.name = name
         self.typ = typ
         self.category = category
@@ -11,9 +11,7 @@ class Attack:
         self.accuracy = accuracy
         self.pp = pp
 
-#list of Normal type moves
-#{moves.bite: 1, moves.hydro_pump: 1, moves.bite: 20, moves.hyper_beam: 52})
-
+#list of attack type moves
 
 tackle = Attack('Tackle', 'normal', 'physical', 40, 100, 35)
 
