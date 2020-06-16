@@ -54,7 +54,7 @@ bulbasaur = Pokemon('Bulbasaur', 1, 64, ['grass', 'poison'], 45, 45, False, {mov
 
 ivysaur = Pokemon('Ivysaur', 16, 142, ['grass', 'poison'], 60, 60, False, {moves.tackle: 1, moves.vine_whip: 13, moves.razor_leaf: 27, moves.solar_beam: 48})
 
-ivysaur = Pokemon('Venusaur', 32, 236, ['grass', 'poison'], 80, 80, False, {moves.tackle: 1, moves.vine_whip: 13, moves.razor_leaf: 27, moves.solar_beam: 48})
+venusaur = Pokemon('Venusaur', 32, 236, ['grass', 'poison'], 80, 80, False, {moves.tackle: 1, moves.vine_whip: 13, moves.razor_leaf: 27, moves.solar_beam: 48})
 
 charmander = Pokemon('Charmander', 1, 62, ['fire'], 39, 39, False, {moves.scratch: 1, moves.ember: 9, moves.rage: 22, moves.slash: 30, moves.flamethrower: 38, fire_spin: 46})
 
@@ -72,8 +72,8 @@ pikachu = Pokemon('Pikachu', 1, 112, ['electric'], 35, 35, False, {moves.thunder
 
 raichu = Pokemon('Raichu', 1, 218, ['electric'], 60, 60, False, {moves.thunder_shock: 1, moves.quick_attack: 16, moves.swift: 26, moves.thunder: 43})
 
-snorlax = Pokemon('Snorlax', 1, 189, ['normal'], 160, 160, False, {moves.headbutt: 1, moves.body_slam: 35, moves.double_edge: 48, moves.hyper_beam: 150})
+snorlax = Pokemon('Snorlax', 1, 189, ['normal'], 160, 160, False, {moves.headbutt: 1, moves.body_slam: 35, moves.double_edge: 48, moves.hyper_beam: 56})
 
 magikarp = Pokemon('Magikarp', 1, 40, ['water'], 20, 20, False, {moves.splash: 1, moves.tackle: 15})
 
-gyarados = Pokemon('Gyarados', 20, 95, ['water', 'flying'], 20, 20, False, {moves.bite: 1, moves.hydro_pump: 1, moves.bite: 60, moves.hyper_beam: 150})
+gyarados = Pokemon('Gyarados', 20, 95, ['water', 'flying'], 20, 20, False, {moves.bite: 1, moves.hydro_pump: 1, moves.hyper_beam: 52})
