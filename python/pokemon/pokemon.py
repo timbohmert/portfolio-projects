@@ -50,14 +50,30 @@ class Pokemon:
 
         
 #dictionary of the attack multiplier for each of the pokemon types.
-attack_multiple = {'fire': {'water': 0.5, 'grass': 2}, 'water': {'fire': 2, 'grass': 0.5}, 'grass': {'water': 2, 'fire': 0.5}}
+bulbasaur = Pokemon('Bulbasaur', 1, 64, ['grass', 'poison'], 45, 45, False, {moves.tackle: 1, moves.vine_whip: 13, moves.razor_leaf: 27, moves.solar_beam: 48})
 
+ivysaur = Pokemon('Ivysaur', 16, 142, ['grass', 'poison'], 60, 60, False, {moves.tackle: 1, moves.vine_whip: 13, moves.razor_leaf: 27, moves.solar_beam: 48})
 
-#pokemon objects that include
-charmander = Pokemon('Charmander', 30, 0, 'fire', 130, 130, False, {'fire breath': 10, 'scratch': 7, 'flamethrower': 15})
+ivysaur = Pokemon('Venusaur', 32, 236, ['grass', 'poison'], 80, 80, False, {moves.tackle: 1, moves.vine_whip: 13, moves.razor_leaf: 27, moves.solar_beam: 48})
 
-squirtle = Pokemon('Squirtle', 69, 0, 'water', 140, 140, False, {'water hose': 10, 'tackle': 7, 'hydroblast': 15})
+charmander = Pokemon('Charmander', 1, 62, ['fire'], 39, 39, False, {moves.scratch: 1, moves.ember: 9, moves.rage: 22, moves.slash: 30, moves.flamethrower: 38, fire_spin: 46})
 
-bulbassaur = Pokemon('Bulbassaur', 25, 0, 'grass', 150, 150, False, {'vine whip': 10, 'tackle': 7, 'power whip': 15})
+charmeleon = Pokemon('Charmeleon', 16, 142, ['fire'], 58, 58, False, {moves.scratch: 1, moves.ember: 9, moves.rage: 22, moves.slash: 30, moves.flamethrower: 38, fire_spin: 46})
 
-pikachu = Pokemon('Pikachu', 10, 10, 'electric', 100, 80, False, {'lightning bolt'})
+charizard = Pokemon('Charizard', 36, 240, ['fire'], 78, 78, False, {moves.scratch: 1, moves.ember: 9, moves.rage: 22, moves.slash: 30, moves.flamethrower: 38, fire_spin: 46})
+
+squirtle = Pokemon('Squirtle', 1, 63, ['water'], 44, 44, False, {moves.tackle: 1, moves.bubble: 8, moves.water_gun: 15, moves.bite: 22, moves.skull_bash: 35, hydro_pump: 42})
+
+wartortle = Pokemon('Wartotle', 16, 142, ['water'], 59, 59, False, {moves.tackle: 1, moves.bubble: 8, moves.water_gun: 15, moves.bite: 22, moves.skull_bash: 35, hydro_pump: 42})
+
+blastoise = Pokemon('Blastoise', 79, 239, ['water'], 79, 79, False, {moves.tackle: 1, moves.bubble: 8, moves.water_gun: 15, moves.bite: 22, moves.skull_bash: 35, hydro_pump: 42})
+
+pikachu = Pokemon('Pikachu', 1, 112, ['electric'], 35, 35, False, {moves.thunder_shock: 1, moves.quick_attack: 16, moves.swift: 26, moves.thunder: 43})
+
+raichu = Pokemon('Raichu', 1, 218, ['electric'], 60, 60, False, {moves.thunder_shock: 1, moves.quick_attack: 16, moves.swift: 26, moves.thunder: 43})
+
+snorlax = Pokemon('Snorlax', 1, 189, ['normal'], 160, 160, False, {moves.headbutt: 1, moves.body_slam: 35, moves.double_edge: 48, moves.hyper_beam: 150})
+
+magikarp = Pokemon('Magikarp', 1, 40, ['water'], 20, 20, False, {moves.splash: 1, moves.tackle: 15})
+
+gyarados = Pokemon('Gyarados', 20, 95, ['water', 'flying'], 20, 20, False, {moves.bite: 1, moves.hydro_pump: 1, moves.bite: 60, moves.hyper_beam: 150})
