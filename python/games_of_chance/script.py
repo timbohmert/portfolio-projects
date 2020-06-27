@@ -3,38 +3,54 @@
 #imported libraries: Games created by Tim Bohmert
 import games
 
+#user class
+class User:
+
+    def __init__(self, wallet):
+        self.wallet = wallet
+
+
 #user input to enter the games
 
-def play_a_game(game):
-    if game == 1:
+    def play_a_game(self):
+        
+        #requests user input for game selection
+        game = int(input("""Select the number of the game you want to play:
+        1)Coin Flip | 2)Cho-Han | 3)High Card | 4)Roulette: """))
+        if game == 4:
+            print('Sorry, that game is under construction. Try again later. ')
+        while game not in [1, 2, 3]:
+            game = int(input('Please select 1 for Coin Flip, 2 for Cho-Han, 3 for High Card, or 4 for Roulette: '))
+        #user selected coin-flip, will run program and return winnings/losings and update wallet
+        if game == 1:
+            result = games.coin_flip()
+            self.wallet += result
+            print('After the last game, you now have {0} in your account wallet.'.format(self.wallet))
 
-        print('Welcome to Tim\'s Silver Coin Flip! All bets are final. Good luck!')        
-        call = input('''Select the number of your call:
-        1) Heads; 2) Tails: ''')
-        call_int = int(call)
-        while call_int not in [1, 2]:
-                print('Please choose 1 or 2 to continue the story: ')
-        if call_int == 1:
-            call = 'Heads'
-            bet = input('Please enter your bet: ')
-            bet_int = int(bet)
-            games.coin_flip(call, bet_int)
-        elif call_int == 2:
-            call = 'Tails'
-            bet = input('Please enter your bet: ')
-            bet_int = int(bet)
-            games.coin_flip(call, bet_int)
+
+        #user selected cho-han, will run program and return winnings/losings and update wallet
+        if game == 2:
+            result = games.cho_han()
+            self.wallet += result
+            print('After the last game, you now have {0} in your account wallet.'.format(self.wallet))
+
+        #user selected high card, will run program and return winnings/losings and update wallet
+        if game == 3:
+            result = games.high_card()
+            self.wallet += result
+            print('After the last game, you now have {0} in your account wallet.'.format(self.wallet))
                 
 
+print('Welcome to Tim\'s Roayle Casino!')
+
 name = input('Please enter your name: ')
+while type(name) == None:
+    name = int(input('Please enter a valid name: '))
 
-money = input('Please enter the amount of money you would like to deposit into your account: ')
+money = int(input('Please enter the amount of money you would like to deposit into your account wallet: '))
 
-name = games.Games(money)
+name = User(money)
 
-print('You now have {0} in your wallet.'.format(name.money))
+print('You now have {0} in your wallet.'.format(name.wallet))
 
-game_to_play = input("""Select the number of the game you want to play: 
-1) Coin Flip; 2) Cho-Han; 3) High Card; 4) Roulette: """)
-
-play_a_game(int(game_to_play))
+name.play_a_game()

@@ -1,6 +1,6 @@
 #Project Goal (supplied by Codecademy): You will work to write several functions that simulate games of chance. Each one of these functions will use a number of parameters, random number generation, conditionals, and return statements.
 
-#imported libraries (supplied by Codecademy)
+#imported libraries supplied by Codecademy
 import random
 
 money = 100
@@ -8,27 +8,34 @@ money = 100
 
 ##GAME OF CHANCE FUNCTIONS##
 
-class Games:
-
-    def __init__(self, money):
-        self.money = money
-
-
 
 #coin flip
-def coin_flip(call, bet):
+def coin_flip():
     print('Welcome to Tim\'s Silver Coin Flip! All bets are final. Good luck!')
     
+    #taking in user selection of call (1 = Heads, 2 = Tails) and the quantity of their bet
+    call_int = int(input('''Select the number of your call:
+    1)Heads | 2)Tails: '''))
+    while call_int not in [1, 2]:
+            call_int = int(input('Please choose 1 for Heads or 2 for Tails: '))
+    bet = int(input('Please enter your bet: '))
+    while type(bet) != int:
+        print('Please enter in whole number for a bet: ')
+    if call_int == 1:
+        call = 'Heads'
+    else:
+        call = 'Tails'
 
     #generating random number of 0 or 1, and assigning that to 'tails' (0) or 'heads' (1)
-    num = random.randint(0,1)
-    if num == 0:
+    num = random.randint(1,2)
+    if num == 1:
+        face = 'Heads'
+        print('It landed Heads.')
+    else:
         face = 'Tails'
         print('It landed tails.')
-    else:
-        face = 'Heads'
-        print('It landed heads.')
 
+    #determines if user won and returns winnings/losings
     if call == face:
         print('Winner! Winner! You won {0}.'.format(bet))
         return bet
@@ -38,8 +45,21 @@ def coin_flip(call, bet):
 
 
 #cho-han
-def cho_han(call, bet):
+def cho_han():
     print('Welcome to on Tim\'s Cho-Han Rumble! All bets are final. Good luck!')
+
+    #taking in user selection of call (1 = Even, 2 = Odd) and the quantity of their bet
+    call_int = int(input('''Select the number of your call:
+    1)Even | 2)Odd: '''))
+    while call_int not in [1, 2]:
+            call_int = int(input('Please choose 1 for Even or 2 for Odd: '))
+    bet = int(input('Please enter your bet: '))
+    while type(bet) != int:
+        bet = int(input('Please enter in whole number for a bet: '))
+    if call_int == 1:
+        call = 'Even'
+    else:
+        call = 'Tails'
 
     #generating two random numbers, each ranging from 1 to 6, and determining if sum is odd or even
     dice = [random.randint(1, 6) for i in range(0,2)]
@@ -51,6 +71,7 @@ def cho_han(call, bet):
         result = 'Odd'
         print('{0} and {1} equal {2}. That is odd.'.format(dice[0], dice[1], total))
 
+    #determines if user won and returns winnings/losings
     if call == result:
         print('Winner! Winner! You won {0}.'.format(bet))
         return bet
@@ -60,8 +81,13 @@ def cho_han(call, bet):
 
 
 #high card
-def high_card(bet):
+def high_card():
     print('Welcome to Tim\'s High Card Shenanigans! Aces are high and all bets are final. Good luck!')
+
+    #taking in user the quantity of their bet
+    bet = int(input('Please enter your bet: '))
+    while type(bet) != int:
+        bet = int(input('Please enter in whole number for a bet: '))
 
     #generating two cards, player and house, assigning to face value if face card
     deck = []
@@ -71,6 +97,7 @@ def high_card(bet):
         deck.append(i)
         deck.append(i)
 
+    #converts card number into string of name or number
     cards =[deck.pop(random.randrange(len(deck))) for i in range(2)]
     card_name = []
     for card in cards:
@@ -130,9 +157,66 @@ wheel_dict = {}
 for num in american_wheel:
     wheel_dict[num] = {'Number': num, 'even_odd': num_even_odd(num), 'color': num_color(num)}
 
+#type selection string with all of the type options
+selection = """1)Red or Black: bet on red or black
+    2)Even or Odd: bet on even or odd number
+    3)Straight: bet on a single number
+    4)Split: bet on two vertically/horizontally adjacent numbers
+    5)Row: bet on 0 and 00
+    6)Street: bet on three consecutive numbers in a horizontal line
+    7)Trio: bet on three-numbers that involves 0 or 00
+    8)Corner: bet on four numbers that meet at one corner
+    9)Double Street: bet on six numbers from two adjacent rows
+    10)Basket: bet on 0-00-1-2-3"""
 
-def roulette(type, name, bet):
+
+
+def roulette(name, bet):
     print('Welcome to Tim\'s Spin-to-Win Roulette! All bets are final. Good luck!')
+
+    #taking in user selection for type of bet
+    while True:
+        type_int = int(input('''Select the number for the type of bet you would like to make for the next spin: 
+    {0}
+    : '''.format(selection)))
+        while type_int not in list(range(1,11)):
+                type_int = int(input('''Invalid response. Please choose a number from the following selection: {0}: '''.format(selection)))
+        while type(bet) != int:
+            bet = int(input('Please enter in whole number for a bet: '))
+        
+        #red or black selection (1 = red, 2 = black)
+        if type_int == 1:
+            name_int = int(input('''Select the number of your call:
+            1)Red | 2)Black: '''))
+            while name_int not in [1, 2]:
+                    call_int = int(input('Please choose 1 for Even or 2 for Odd: '))
+            bet = int(input('Please enter your bet: '))
+            while type(bet) != int:
+                bet = int(input('Please enter in whole number for a bet: '))
+            if name_int == 1:
+                name = 'Even'
+            else:
+                name = 'Tails'
+
+        #even or odd selection (1 = even, 2 = odd)
+        if type_int == 2:
+            name_int = int(input('''Select the number of your call:
+            1)Even | 2)Odd: '''))
+            while name_int not in [1, 2]:
+                    call_int = int(input('Please choose 1 for Even or 2 for Odd: '))
+            bet = int(input('Please enter your bet: '))
+            while type(bet) != int:
+                bet = int(input('Please enter in whole number for a bet: '))
+            if name_int == 1:
+                name = 'Even'
+            else:
+                name = 'Tails'
+
+        bet = int(input('Please enter your bet: '))
+        add_bet = int(input('''Would you like to make an additional bet?
+        1)Yes | 2)No: '''))
+        if add_bet == 2:
+            break
 
     #generating the roulette wheel and the number the ball landed on
     winning_number = random.choice(american_wheel)
@@ -232,18 +316,4 @@ def roulette(type, name, bet):
             return 0 - bet
 
 
-
-
-
-
-
-
-        
-
-    
-    
-
-
-
-
-##FUNCTION CALLS##
+#roulette('tim', 30)
