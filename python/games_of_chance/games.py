@@ -127,92 +127,86 @@ def high_card():
 
 #roulette
 
-#code to create template for each number of the roulette wheel, and adjust it from there (I don't know the sequential patter for red and black)
-french_wheel = [i for i in range(0, 37)]
-american_wheel = ['00'] + [str(x) for x in french_wheel]
 
-dict_keys = ['number','color', 'odd_even']
-dict_values = ['black/red', 'odd/even']
-
-#wheel_dict = {key: {'number': key, 'color': 'black/red', 'odd_even': int(key) % == 0} for key in american_wheel}
-
-def num_even_odd(num):
-    if num == '0' or num == '00':
-        return None
-    elif int(num) % 2 == 0:
-        return 'Even'
-    else:
-        return 'Odd'
-
-def num_color(num):
-    if num == '0' or num == '00':
-        return 'Green'
-    if int(num) in [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]:
-        return 'Red'
-    else:
-        return 'Black'
-
-wheel_dict = {}
-
-for num in american_wheel:
-    wheel_dict[num] = {'Number': num, 'even_odd': num_even_odd(num), 'color': num_color(num)}
-
-#type selection string with all of the type options
-selection = """1)Red or Black: bet on red or black
-    2)Even or Odd: bet on even or odd number
-    3)Straight: bet on a single number
-    4)Split: bet on two vertically/horizontally adjacent numbers
-    5)Row: bet on 0 and 00
-    6)Street: bet on three consecutive numbers in a horizontal line
-    7)Trio: bet on three-numbers that involves 0 or 00
-    8)Corner: bet on four numbers that meet at one corner
-    9)Double Street: bet on six numbers from two adjacent rows
-    10)Basket: bet on 0-00-1-2-3"""
+from workshop import wheel_dict, american_wheel, type_selection, split_selection, split_selection_string, street_selection, street_selection_string, trio_selection
 
 
-
-def roulette(name, bet):
+#function for roulette game
+def roulette():
     print('Welcome to Tim\'s Spin-to-Win Roulette! All bets are final. Good luck!')
 
     #taking in user selection for type of bet
+    bet_dict = {}
     while True:
         type_int = int(input('''Select the number for the type of bet you would like to make for the next spin: 
     {0}
-    : '''.format(selection)))
+    : '''.format(type_selection)))
         while type_int not in list(range(1,11)):
-                type_int = int(input('''Invalid response. Please choose a number from the following selection: {0}: '''.format(selection)))
-        while type(bet) != int:
-            bet = int(input('Please enter in whole number for a bet: '))
+            type_int = int(input('''Invalid Entry. Please choose a number from the following selection: {0}: '''.format(type_selection)))
         
         #red or black selection (1 = red, 2 = black)
         if type_int == 1:
             name_int = int(input('''Select the number of your call:
             1)Red | 2)Black: '''))
             while name_int not in [1, 2]:
-                    call_int = int(input('Please choose 1 for Even or 2 for Odd: '))
-            bet = int(input('Please enter your bet: '))
-            while type(bet) != int:
-                bet = int(input('Please enter in whole number for a bet: '))
+                    name_int = int(input('Invalid entry. Please choose 1 for Even or 2 for Odd: '))
             if name_int == 1:
-                name = 'Even'
+                name = 'Red'
             else:
-                name = 'Tails'
+                name = 'Black'
 
         #even or odd selection (1 = even, 2 = odd)
         if type_int == 2:
             name_int = int(input('''Select the number of your call:
             1)Even | 2)Odd: '''))
             while name_int not in [1, 2]:
-                    call_int = int(input('Please choose 1 for Even or 2 for Odd: '))
-            bet = int(input('Please enter your bet: '))
-            while type(bet) != int:
-                bet = int(input('Please enter in whole number for a bet: '))
+                name_int = int(input('Invalid entry. Please choose 1 for Even or 2 for Odd: '))
             if name_int == 1:
                 name = 'Even'
             else:
-                name = 'Tails'
+                name = 'Odd'
+
+        #straight selection (any single number)
+        if type_int == 3:
+            name = input('''Select the number of your call (0, 00, or any number between 1 through 36)''')
+            while name not in list(wheel_dict.keys()):
+                name = input('''Invalid entry. Select the number of your call (0, 00, or any number between 1 through 36)''')
+            
+        #split selection
+        if type_int == 4:
+            name_key = input('''Select the number for the split you would like to select as your call(numbers in brackets are split selection): 
+            {0}'''.format(split_selection_string))
+            while name_key not in list(split_selection.keys()):
+                name_key = input('''Invalid entry. Please choose from the following selection (numbers in brackets are split selection): 
+                {0}'''.format(split_selection_string))
+            name = split_selection[name_key]
+
+        #row selection
+        if type_int == 5:
+            print('Your call is on 0 and 00')
+            name = ['0', '00']
+
+        #street selection
+        if type_int == 6:
+            name_key = input('''Select the number for the street you would like to select as your call(numbers in brackets are street selection):
+            {0}'''.format(street_selection_string))
+            while name_key not in list(street_selection.keys()):
+                name_key = input('''Invalid entry. Please choose from the following selection (numbers in brackets are street selection):
+                {0}'''.format(street_selection_string))
+            name = street_selection[name_key]
+
+        #trio selection
+        if type_int == 7:
+            name_key = input('''Select the number for the trio you would like to select as your call(numbers in brackets are street selection):
+            1) [0, 1, 2] | 2) [00, 2, 3]''')
+            while name_key not in [1, 2]:
+                name_key = input('''Invalid entry. Please choose from the following selection: 1) [0, 1, 2] | 2) [00, 2, 3]''')
+            name = trio_selection[name_key]
 
         bet = int(input('Please enter your bet: '))
+        
+        while type(bet) != int:
+            bet = int(input('Please enter in whole number for a bet: '))
         add_bet = int(input('''Would you like to make an additional bet?
         1)Yes | 2)No: '''))
         if add_bet == 2:
@@ -226,8 +220,17 @@ def roulette(name, bet):
     #determine winners and losers
 
     #red-or-black type
-    if type == 'Red or Black':
+    if type_int == 1:
         if winning_color == name:
+            print('Winner! Winner! You won {0}.'.format(bet))
+            return bet
+        else:
+            print('Better luck next time. You owe the house {0}.'.format(bet))
+            return 0 - bet
+
+    #even_orodd type
+    if type_int == 2:
+        if wheel_dict[winning_number]['even_odd'] == name:
             print('Winner! Winner! You won {0}.'.format(bet))
             return bet
         else:
@@ -235,16 +238,16 @@ def roulette(name, bet):
             return 0 - bet
     
     #straight type
-    if type == 'Straight':
+    if type_int == 3:
         if name == winning_number:
             print('Winner! Winner! You won {0}.'.format(bet * 35))
             return bet * 35
         else:
             print('Better luck next time. You owe the house {0}.'.format(bet))
             return 0 - bet
-
+    
     #split or row type
-    if type == 'Split' or type == 'Row':
+    if type_int == 4 or type_int == 5:
         if winning_number in name:
             print('Winner! Winner! You won {0}.'.format(bet * 17))
             return bet * 17
@@ -253,7 +256,7 @@ def roulette(name, bet):
             return 0 - bet
 
     #street or trio type
-    if type == 'Street' or type == 'Trio':
+    if type_int == 6 or type_int == 7:
         if winning_number in name:
             print('Winner! Winner! You won {0}.'.format(bet * 11))
             return bet * 11
@@ -262,7 +265,7 @@ def roulette(name, bet):
             return 0 - bet
 
     #corner type
-    if type == 'Corner':
+    if type_int == 8:
         if winning_number in name:
             print('Winner! Winner! You won {0}.'.format(bet * 8))
             return bet * 8
@@ -271,7 +274,7 @@ def roulette(name, bet):
             return 0 - bet
         
     #double street type
-    if type == 'Double Street':
+    if type_int == 9:
         if winning_number in name:
             print('Winner! Winner! You won {0}.'.format(bet * 5))
             return bet * 5
@@ -280,7 +283,7 @@ def roulette(name, bet):
             return 0 - bet
 
     #basket type
-    if type == 'Basket':
+    if type_int == 10:
         if winning_number in ['00', '0', '1', '2', '3']:
             print('Winner! Winner! You won {0}.'.format(bet * 6))
             return bet * 6
@@ -289,7 +292,7 @@ def roulette(name, bet):
             return 0 - bet
 
     #low-or-high type
-    if type == 'Low or High':
+    if type_int == 11:
         if winning_number in name:
             print('Winner! Winner! You won {0}.'.format(bet))
             return bet
@@ -297,8 +300,8 @@ def roulette(name, bet):
             print('Better luck next time. You owe the house {0}.'.format(bet))
             return 0 - bet
 
-    #dozen type
-    if type == 'Dozen' or type == 'Column' or type == 'Snake':
+    #dozen, column, or snake type
+    if type_int == 12 or type_int == 13 or type_int == 14:
         if winning_number in name:
             print('Winner! Winner! You won {0}.'.format(bet))
             return bet * 2
@@ -306,14 +309,3 @@ def roulette(name, bet):
             print('Better luck next time. You owe the house {0}.'.format(bet))
             return 0 - bet
 
-    #even_orodd type
-    if type == 'Even or Odd':
-        if wheel_dict[winning_number]['even_odd'] == name:
-            print('Winner! Winner! You won {0}.'.format(bet))
-            return bet
-        else:
-            print('Better luck next time. You owe the house {0}.'.format(bet))
-            return 0 - bet
-
-
-#roulette('tim', 30)
