@@ -128,7 +128,7 @@ def high_card():
 #roulette
 
 
-from workshop import wheel_dict, american_wheel, type_selection, split_selection, split_selection_string, street_selection, street_selection_string, trio_selection
+from workshop import wheel_dict, american_wheel, type_selection, split_selection, split_selection_string, street_selection, street_selection_string, trio_selection, corner_selection, corner_selection_string, double_street_selection, double_street_selection_string, low_or_high_selection, low_or_high_selection_string, dozen_selection, dozen_selection_string, column_selection, column_selection_string
 
 
 #function for roulette game
@@ -141,7 +141,7 @@ def roulette():
         type_int = int(input('''Select the number for the type of bet you would like to make for the next spin: 
     {0}
     : '''.format(type_selection)))
-        while type_int not in list(range(1,11)):
+        while type_int not in list(range(1,15)):
             type_int = int(input('''Invalid Entry. Please choose a number from the following selection: {0}: '''.format(type_selection)))
         
         #red or black selection (1 = red, 2 = black)
@@ -174,7 +174,8 @@ def roulette():
             
         #split selection
         if type_int == 4:
-            name_key = input('''Select the number for the split you would like to select as your call(numbers in brackets are split selection): 
+            name_key = input(
+            '''Select the number for the split you would like to select as your call(numbers in brackets are split selection): 
             {0}'''.format(split_selection_string))
             while name_key not in list(split_selection.keys()):
                 name_key = input('''Invalid entry. Please choose from the following selection (numbers in brackets are split selection): 
@@ -188,7 +189,8 @@ def roulette():
 
         #street selection
         if type_int == 6:
-            name_key = input('''Select the number for the street you would like to select as your call(numbers in brackets are street selection):
+            name_key = input(
+            '''Select the number for the street you would like to select as your call(numbers in brackets are street selection):
             {0}'''.format(street_selection_string))
             while name_key not in list(street_selection.keys()):
                 name_key = input('''Invalid entry. Please choose from the following selection (numbers in brackets are street selection):
@@ -197,11 +199,72 @@ def roulette():
 
         #trio selection
         if type_int == 7:
-            name_key = input('''Select the number for the trio you would like to select as your call(numbers in brackets are street selection):
+            name_key = input(
+            '''Select the number for the trio you would like to select as your call(numbers in brackets are street selection):
             1) [0, 1, 2] | 2) [00, 2, 3]''')
             while name_key not in [1, 2]:
                 name_key = input('''Invalid entry. Please choose from the following selection: 1) [0, 1, 2] | 2) [00, 2, 3]''')
             name = trio_selection[name_key]
+
+        #corner selection
+        if type_int == 8:
+            name_key = input(
+            '''Select the number for the corner you would like to select as your call(numbers in brackets are corner selection):
+            {0}'''.format(corner_selection_string))
+            while name_key not in list(corner_selection.keys()):
+                name_key = input('''Invalid entry. Please choose from the following selection (numbers in brackets are street selection):
+                {0}'''.format(corner_selection_string))
+            name = corner_selection[name_key]
+
+        #double street selection
+        if type_int == 9:
+            name_key = input(
+            '''Select the number for the double street you would like to select as your call(numbers in brackets are double street selection):
+            {0}'''.format(double_street_selection_string))
+            while name_key not in list(double_street_selection.keys()):
+                name_key = input('''Invalid entry. Please choose from the following selection (numbers in brackets are double street selection):
+                {0}'''.format(double_street_selection_string))
+            name = double_street_selection[name_key]
+
+        #basket selection
+        if type_int == 10:
+            print('Your call is on [0, 00, 1, 2, 3].')
+            name = ['0', '00', '1', '2', '3']
+
+        # low or high selection
+        if type_int == 11:
+            name_key = input(
+            '''Select the number for your call:
+            {0}'''.format(low_or_high_selection_string))
+            while name_key not in list(low_or_high_selection.keys()):
+                name_key = input('''Invalid entry. Please choose from the following selection:
+                {0}'''.format(low_or_high_selection_string))
+            name = low_or_high_selection[name_key]
+
+        #dozen selection
+        if type_int == 12:
+            name_key = input(
+            '''Select the number for your call:
+            {0}'''.format(dozen_selection_string))
+            while name_key not in list(dozen_selection.keys()):
+                name_key = input('''Invalid entry. Please choose from the following selection:
+                {0}'''.format(dozen_selection_string))
+            name = dozen_selection[name_key]
+
+        #column selection
+        if type_int == 13:
+            name_key = input(
+            '''Select the number for your call:
+            {0}'''.format(column_selection_string))
+            while name_key not in list(column_selection.keys()):
+                name_key = input('''Invalid entry. Please choose from the following selection:
+                {0}'''.format(column_selection_string))
+            name = column_selection[name_key]
+
+        #snake selection
+        if type_int == 14:
+            print('Your call is on [1, 5, 9, 12, 14, 16, 19, 23, 27, 30, 32, 34].')
+            name = ['1', '5', '9', '12', '14', '16', '19', '23', '27', '30', '32', '34']
 
         bet = int(input('Please enter your bet: '))
         
@@ -309,3 +372,4 @@ def roulette():
             print('Better luck next time. You owe the house {0}.'.format(bet))
             return 0 - bet
 
+roulette()

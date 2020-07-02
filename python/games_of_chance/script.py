@@ -40,7 +40,7 @@ class User:
 
         #user selected roulette, will run program and return winnings/losings and update wallet
         if game == 4:
-            result = games.roulette
+            result = games.roulette()
             self.wallet += result
             print('After the last game, you now have {0} in your account wallet.'.format(self.wallet))
                 
