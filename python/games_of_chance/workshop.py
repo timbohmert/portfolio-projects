@@ -211,7 +211,7 @@ dozen_selection_string = '''1) ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10
 #column selection
 column_selection = {str(x): [str(x), str(x + 3), str(x + 6), str(x + 9),  str(x + 12), str(x + 15), str(x + 18), str(x + 21), str(x + 24), str(x + 27), str(x + 30), str(x + 33)] for x in range(1, 4)}
 
-print(column_selection)
+#print(column_selection)
 
 
 column_selection_string = '''1) ['1', '4', '7', '10', '13', '16', '19', '22', '25', '28', '31', '34'] | 2) ['2', '5', '8', '11', '14', '17', '20', '23', '26', '29', '32', '35'] | 3) ['3', '6', '9', '12', '15', '18', '21', '24', '27', '30', '33', '36']'''

@@ -2,29 +2,31 @@
 
 #imported libraries supplied by Codecademy
 import random
-
-money = 100
-
-
 ##GAME OF CHANCE FUNCTIONS##
 
 
 #coin flip
-def coin_flip():
-    print('Welcome to Tim\'s Silver Coin Flip! All bets are final. Good luck!')
+def coin_flip(wallet):
+    print('\nWelcome to Tim\'s Silver Coin Flip! All bets are final. Good luck!')
     
     #taking in user selection of call (1 = Heads, 2 = Tails) and the quantity of their bet
     call_int = int(input('''Select the number of your call:
     1)Heads | 2)Tails: '''))
     while call_int not in [1, 2]:
             call_int = int(input('Please choose 1 for Heads or 2 for Tails: '))
-    bet = int(input('Please enter your bet: '))
-    while type(bet) != int:
-        print('Please enter in whole number for a bet: ')
     if call_int == 1:
         call = 'Heads'
     else:
         call = 'Tails'
+    while True:
+        bet = int(input('Please enter your bet: '))
+        if type(bet) != int:
+            print('Please enter in whole number for a bet: ')
+            continue
+        if bet > wallet:
+            print('You don\'t have enough in your wallet. Please decrease the amount of your bet: ')
+            continue
+        break
 
     #generating random number of 0 or 1, and assigning that to 'tails' (0) or 'heads' (1)
     num = random.randint(1,2)
@@ -45,8 +47,8 @@ def coin_flip():
 
 
 #cho-han
-def cho_han():
-    print('Welcome to on Tim\'s Cho-Han Rumble! All bets are final. Good luck!')
+def cho_han(wallet):
+    print('\nWelcome to on Tim\'s Cho-Han Rumble! All bets are final. Good luck!')
 
     #taking in user selection of call (1 = Even, 2 = Odd) and the quantity of their bet
     call_int = int(input('''Select the number of your call:
@@ -54,12 +56,19 @@ def cho_han():
     while call_int not in [1, 2]:
             call_int = int(input('Please choose 1 for Even or 2 for Odd: '))
     bet = int(input('Please enter your bet: '))
-    while type(bet) != int:
-        bet = int(input('Please enter in whole number for a bet: '))
     if call_int == 1:
         call = 'Even'
     else:
-        call = 'Tails'
+        call = 'Odd'
+    while True:
+        bet = int(input('Please enter your bet: '))
+        if type(bet) != int:
+            print('Please enter in whole number for a bet: ')
+            continue
+        if bet > wallet:
+            print('You don\'t have enough in your wallet. Please decrease the amount of your bet: ')
+            continue
+        break
 
     #generating two random numbers, each ranging from 1 to 6, and determining if sum is odd or even
     dice = [random.randint(1, 6) for i in range(0,2)]
@@ -81,13 +90,19 @@ def cho_han():
 
 
 #high card
-def high_card():
-    print('Welcome to Tim\'s High Card Shenanigans! Aces are high and all bets are final. Good luck!')
+def high_card(wallet):
+    print('\nWelcome to Tim\'s High Card Shenanigans! Aces are high and all bets are final. Good luck!')
 
     #taking in user the quantity of their bet
-    bet = int(input('Please enter your bet: '))
-    while type(bet) != int:
-        bet = int(input('Please enter in whole number for a bet: '))
+    while True:
+        bet = int(input('Please enter your bet: '))
+        if type(bet) != int:
+            print('Please enter in whole number for a bet: ')
+            continue
+        if bet > wallet:
+            print('You don\'t have enough in your wallet. Please decrease the amount of your bet: ')
+            continue
+        break
 
     #generating two cards, player and house, assigning to face value if face card
     deck = []
@@ -132,11 +147,12 @@ from workshop import wheel_dict, american_wheel, type_selection, split_selection
 
 
 #function for roulette game
-def roulette():
-    print('Welcome to Tim\'s Spin-to-Win Roulette! All bets are final. Good luck!')
+def roulette(wallet):
+    print('\nWelcome to Tim\'s Spin-to-Win Roulette! All bets are final. Good luck!')
 
-    #taking in user selection for type of bet
+    #taking in user selection for type of bet and tracks the bet total to see if enough in wallet
     bet_dict = {}
+    total_bet = 0
     while True:
         type_int = int(input('''Select the number for the type of bet you would like to make for the next spin: 
     {0}
@@ -199,9 +215,9 @@ def roulette():
 
         #trio selection
         if type_int == 7:
-            name_key = input(
+            name_key = int(input(
             '''Select the number for the trio you would like to select as your call(numbers in brackets are street selection):
-            1) [0, 1, 2] | 2) [00, 2, 3]''')
+            1) [0, 1, 2] | 2) [00, 2, 3]'''))
             while name_key not in [1, 2]:
                 name_key = input('''Invalid entry. Please choose from the following selection: 1) [0, 1, 2] | 2) [00, 2, 3]''')
             name = trio_selection[name_key]
@@ -266,110 +282,194 @@ def roulette():
             print('Your call is on [1, 5, 9, 12, 14, 16, 19, 23, 27, 30, 32, 34].')
             name = ['1', '5', '9', '12', '14', '16', '19', '23', '27', '30', '32', '34']
 
-        bet = int(input('Please enter your bet: '))
         
-        while type(bet) != int:
-            bet = int(input('Please enter in whole number for a bet: '))
+        while True:
+            bet = int(input('Please enter your bet: '))
+            total_bet += bet
+            if type(bet) != int:
+                print('Please enter in whole number for a bet: ')
+                continue
+            if total_bet > wallet:
+                print('You don\'t have enough in your wallet. Please decrease the amount of your bet: ')
+                total_bet -= bet
+                continue
+            break
+        
+        #adding the single bet into the dictionary
+        if type_int not in bet_dict.keys():
+            bet_dict[type_int] = {'names': [name], 'bets': [bet]}
+        else:
+            bet_dict[type_int]['names'] += [name]
+            bet_dict[type_int]['bets'] += [bet]
+
+        #option to add additional bets
         add_bet = int(input('''Would you like to make an additional bet?
         1)Yes | 2)No: '''))
+        while add_bet not in [1, 2]:
+            int(input('''Please enter 1 if you would like to make an additional bet or 2 if you don't want to make any additional bets.'''))
         if add_bet == 2:
             break
+
+    #bets statement
+    bets_string = 'Your bets for the round are '
+    for value in bet_dict.values():
+        bets_string += str(value['names'])
+    print(bets_string)
+
 
     #generating the roulette wheel and the number the ball landed on
     winning_number = random.choice(american_wheel)
     winning_color = wheel_dict[winning_number]['color']
     print('The round goes to {0} {1}.'.format(winning_color, winning_number))
 
-    #determine winners and losers
+    #determine winners and losers and total winning
+
+    total_winning = 0
 
     #red-or-black type
-    if type_int == 1:
-        if winning_color == name:
-            print('Winner! Winner! You won {0}.'.format(bet))
-            return bet
-        else:
-            print('Better luck next time. You owe the house {0}.'.format(bet))
-            return 0 - bet
+    if 1 in bet_dict.keys():
+        for i in range(len(bet_dict[1]['names'])): 
+            if winning_color == bet_dict[1]['names'][i]:
+                print('Winner! Winner! You won {0}.'.format(bet_dict[1]['bets'][i]))
+                total_winning += bet_dict[1]['bets'][i]
+            else:
+                print('Better luck next time. You owe the house {0}.'.format(bet_dict[1]['bets'][i]))
+                total_winning -= bet_dict[1]['bets'][i]
 
     #even_orodd type
-    if type_int == 2:
-        if wheel_dict[winning_number]['even_odd'] == name:
-            print('Winner! Winner! You won {0}.'.format(bet))
-            return bet
-        else:
-            print('Better luck next time. You owe the house {0}.'.format(bet))
-            return 0 - bet
+    if 2 in bet_dict.keys():
+        for i in range(len(bet_dict[2]['names'])): 
+            if wheel_dict[winning_number]['even_odd'] == bet_dict[2]['names'][i]:
+                print('Winner! Winner! You won {0}.'.format(bet_dict[2]['bets'][i]))
+                total_winning += bet_dict[2]['bets'][i]
+            else:
+                print('Better luck next time. You owe the house {0}.'.format(bet_dict[2]['bets'][i]))
+                total_winning -= bet_dict[2]['bets'][i]
     
     #straight type
-    if type_int == 3:
-        if name == winning_number:
-            print('Winner! Winner! You won {0}.'.format(bet * 35))
-            return bet * 35
-        else:
-            print('Better luck next time. You owe the house {0}.'.format(bet))
-            return 0 - bet
+    if 3 in bet_dict.keys():
+        for i in range(len(bet_dict[3]['names'])): 
+            if winning_number == bet_dict[3]['names'][i]:
+                print('Winner! Winner! You won {0}.'.format(bet_dict[3]['bets'][i] * 35))
+                total_winning += bet_dict[3]['bets'][i] * 35
+            else:
+                print('Better luck next time. You owe the house {0}.'.format(bet_dict[3]['bets'][i]))
+                total_winning -= bet_dict[3]['bets'][i]
     
-    #split or row type
-    if type_int == 4 or type_int == 5:
-        if winning_number in name:
-            print('Winner! Winner! You won {0}.'.format(bet * 17))
-            return bet * 17
-        else:
-            print('Better luck next time. You owe the house {0}.'.format(bet))
-            return 0 - bet
+    #split type
+    if 4 in bet_dict.keys():
+        for i in range(len(bet_dict[4]['names'])): 
+            if winning_number == bet_dict[4]['names'][i]:
+                print('Winner! Winner! You won {0}.'.format(bet_dict[4]['bets'][i] * 17))
+                total_winning += bet_dict[4]['bets'][i] * 17
+            else:
+                print('Better luck next time. You owe the house {0}.'.format(bet_dict[4]['bets'][i]))
+                total_winning -= bet_dict[4]['bets'][i]
+    
+    #row type
+    if 5 in bet_dict.keys():
+        for i in range(len(bet_dict[5]['names'])): 
+            if winning_number == bet_dict[5]['names'][i]:
+                print('Winner! Winner! You won {0}.'.format(bet_dict[5]['bets'][i] * 17))
+                total_winning += bet_dict[5]['bets'][i] * 17
+            else:
+                print('Better luck next time. You owe the house {0}.'.format(bet_dict[4]['bets'][i]))
+                total_winning -= bet_dict[4]['bets'][i]
 
     #street or trio type
-    if type_int == 6 or type_int == 7:
-        if winning_number in name:
-            print('Winner! Winner! You won {0}.'.format(bet * 11))
-            return bet * 11
-        else:
-            print('Better luck next time. You owe the house {0}.'.format(bet))
-            return 0 - bet
+    if 6 in bet_dict.keys():
+        for i in range(len(bet_dict[6]['names'])): 
+            if winning_number == bet_dict[6]['names'][i]:
+                print('Winner! Winner! You won {0}.'.format(bet_dict[6]['bets'][i] * 11))
+                total_winning += bet_dict[6]['bets'][i] * 11
+            else:
+                print('Better luck next time. You owe the house {0}.'.format(bet_dict[6]['bets'][i]))
+                total_winning -= bet_dict[6]['bets'][i]
+
+    #trio type
+    if 7 in bet_dict.keys():
+        for i in range(len(bet_dict[7]['names'])): 
+            if winning_number == bet_dict[7]['names'][i]:
+                print('Winner! Winner! You won {0}.'.format(bet_dict[7]['bets'][i] * 11))
+                total_winning += bet_dict[7]['bets'][i] * 11
+            else:
+                print('Better luck next time. You owe the house {0}.'.format(bet_dict[7]['bets'][i]))
+                total_winning -= bet_dict[7]['bets'][i]
 
     #corner type
-    if type_int == 8:
-        if winning_number in name:
-            print('Winner! Winner! You won {0}.'.format(bet * 8))
-            return bet * 8
-        else:
-            print('Better luck next time. You owe the house {0}.'.format(bet))
-            return 0 - bet
+    if 8 in bet_dict.keys():
+        for i in range(len(bet_dict[8]['names'])): 
+            if winning_number == bet_dict[8]['names'][i]:
+                print('Winner! Winner! You won {0}.'.format(bet_dict[8]['bets'][i] * 8))
+                total_winning += bet_dict[8]['bets'][i] * 8
+            else:
+                print('Better luck next time. You owe the house {0}.'.format(bet_dict[8]['bets'][i]))
+                total_winning -= bet_dict[8]['bets'][i]
         
     #double street type
-    if type_int == 9:
-        if winning_number in name:
-            print('Winner! Winner! You won {0}.'.format(bet * 5))
-            return bet * 5
-        else:
-            print('Better luck next time. You owe the house {0}.'.format(bet))
-            return 0 - bet
+    if 9 in bet_dict.keys():
+        for i in range(len(bet_dict[9]['names'])): 
+            if winning_number == bet_dict[9]['names'][i]:
+                print('Winner! Winner! You won {0}.'.format(bet_dict[9]['bets'][i] * 5))
+                total_winning += bet_dict[9]['bets'][i] * 5
+            else:
+                print('Better luck next time. You owe the house {0}.'.format(bet_dict[9]['bets'][i]))
+                total_winning -= bet_dict[9]['bets'][i]
 
     #basket type
-    if type_int == 10:
-        if winning_number in ['00', '0', '1', '2', '3']:
-            print('Winner! Winner! You won {0}.'.format(bet * 6))
-            return bet * 6
-        else:
-            print('Better luck next time. You owe the house {0}.'.format(bet))
-            return 0 - bet
+    if 10 in bet_dict.keys():
+        for i in range(len(bet_dict[10]['names'])): 
+            if winning_number == bet_dict[10]['names'][i]:
+                print('Winner! Winner! You won {0}.'.format(bet_dict[10]['bets'][i] * 6))
+                total_winning += bet_dict[10]['bets'][i] * 6
+            else:
+                print('Better luck next time. You owe the house {0}.'.format(bet_dict[10]['bets'][i]))
+                total_winning -= bet_dict[10]['bets'][i]
 
     #low-or-high type
-    if type_int == 11:
-        if winning_number in name:
-            print('Winner! Winner! You won {0}.'.format(bet))
-            return bet
-        else:
-            print('Better luck next time. You owe the house {0}.'.format(bet))
-            return 0 - bet
+    if 11 in bet_dict.keys():
+        for i in range(len(bet_dict[11]['names'])): 
+            if winning_number == bet_dict[11]['names'][i]:
+                print('Winner! Winner! You won {0}.'.format(bet_dict[11]['bets'][i]))
+                total_winning += bet_dict[11]['bets'][i]
+            else:
+                print('Better luck next time. You owe the house {0}.'.format(bet_dict[11]['bets'][i]))
+                total_winning -= bet_dict[11]['bets'][i]
 
-    #dozen, column, or snake type
-    if type_int == 12 or type_int == 13 or type_int == 14:
-        if winning_number in name:
-            print('Winner! Winner! You won {0}.'.format(bet))
-            return bet * 2
-        else:
-            print('Better luck next time. You owe the house {0}.'.format(bet))
-            return 0 - bet
+    #dozen type
+    if 12 in bet_dict.keys():
+        for i in range(len(bet_dict[12]['names'])): 
+            if winning_number == bet_dict[12]['names'][i]:
+                print('Winner! Winner! You won {0}.'.format(bet_dict[12]['bets'][i] * 2))
+                total_winning += bet_dict[12]['bets'][i] * 2
+            else:
+                print('Better luck next time. You owe the house {0}.'.format(bet_dict[12]['bets'][i]))
+                total_winning -= bet_dict[12]['bets'][i]
 
-roulette()
+    #column type
+    if 13 in bet_dict.keys():
+        for i in range(len(bet_dict[13]['names'])): 
+            if winning_number == bet_dict[13]['names'][i]:
+                print('Winner! Winner! You won {0}.'.format(bet_dict[13]['bets'][i] * 2))
+                total_winning += bet_dict[13]['bets'][i] * 2
+            else:
+                print('Better luck next time. You owe the house {0}.'.format(bet_dict[13]['bets'][i]))
+                total_winning -= bet_dict[13]['bets'][i]
+
+    #snake type
+    if 14 in bet_dict.keys():
+        for i in range(len(bet_dict[14]['names'])): 
+            if winning_number == bet_dict[14]['names'][i]:
+                print('Winner! Winner! You won {0}.'.format(bet_dict[14]['bets'][i] * 2))
+                total_winning += bet_dict[14]['bets'][i] * 2
+            else:
+                print('Better luck next time. You owe the house {0}.'.format(bet_dict[14]['bets'][i]))
+                total_winning -= bet_dict[14]['bets'][i]
+
+    #total winnings
+    if total_winning >= 0:
+        print('Your total winnings are {0} for the round.'.format(total_winning))
+    else:
+        print('Your losses for the round are {0}'.format(total_winning))
+    return total_winning
+
