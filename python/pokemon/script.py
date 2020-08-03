@@ -28,7 +28,7 @@ trainers.beth.attack_opp_trainer('tackle', trainers.tim)
 
 trainers.tim.attack_opp_trainer('scratch', trainers.beth)
 
-trainers.tim.change_pokemon(pokemon.bulbassaur)
+trainers.tim.change_pokemon(pokemon.bulbasaur)
 
 print(trainers.tim.active_pokemon.current_health)
 
