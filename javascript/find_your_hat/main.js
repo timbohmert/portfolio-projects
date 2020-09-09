@@ -21,8 +21,8 @@ class Field {
     }
 
     //setter for field
-    get field() {
-        this._field ;
+    set field(new_field) {
+        this._field = new_field;
     }
 
     //prints field to the terminal in string formation 
@@ -142,4 +142,10 @@ const test = new Field([
     ['░', '^', '░']
 ])
 
+test_field = Field.generateField(12, 12, 'hard')
 
+console.log(test_field)
+
+test_1 = new Field(test_field)
+
+test_1.new_game()
