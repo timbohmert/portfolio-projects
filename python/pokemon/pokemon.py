@@ -6,7 +6,7 @@ import moves, random
 #class for individual pokemon and their characteristics
 class Pokemon:
     #constructor for pokemon attributes
-    def __init__(self, name, level, base_xp, poke_type, max_health, current_health, ko, all_moves):
+    def __init__(self, name, level = 1, base_xp = 0, poke_type, max_health, current_health, ko, all_moves):
         self.name = name
         self.level = level
         self.base_xp = base_xp
@@ -22,10 +22,16 @@ class Pokemon:
             self.available_moves = [self.all_moves[1]]
 
 
+    #lists available moves
+    def avail_moves(self):
+        for i, move in enumerate(self.available_moves, 1):
+            print(str(i) + ': ' + move.name)
+
+
     #method for health lost from attack, with health bottomed out at 0 hp
     def lose_health(self, damage):
         if 0 <= self.current_health - damage:
-            self.current_health = self.current_health - damage
+            self.current_health -= damage
             print('{name} now has {current_health}hp.'.format(name = self.name, current_health = self.current_health))
         else:
             self.current_health = 0
@@ -35,7 +41,7 @@ class Pokemon:
     #method for health gained from potion, with health max````ed out at the max health
     def gain_health(self, potion_hp):
         if self.max_health >= self.current_health + potion_hp:
-            self.current_health = self.current_health + potion_hp
+            self.current_health += potion_hp
         else:
             self.current_health = self.max_health
         print('{name} now has {current_health}hp.'.format(name = self.name, current_health = self.current_health))
@@ -54,12 +60,13 @@ class Pokemon:
     def attack(self, selected_attack, opponent_pokemon):
         #check if the selected attack is in pokemon's available moves
         if selected_attack in self.available_moves:
+            
             #use move accuracy to determine if the pokemon landed the attack
             rand_number = random.randint(0, 99)
             if selected_attack.accuracy > rand_number:
                 attack_power = selected_attack.power
-                attack_multiplier = self.attack_type(opponent_pokemon)
-                damage = (attack_power * (1 + (self.level - 1)//50) * attack_multiplier)//1
+                attack_multiplier = self.type_multiplier(opponent_pokemon)
+                damage = int(((self.level * 2/5 + 2) * attack_power//50 + 2) * attack_multiplier)
                 print("{pokemon_name}'s attack did {damage} damage to {opponent_pokemon}.".format(pokemon_name = self.name, damage = damage, opponent_pokemon = opponent_pokemon.name))
                 return opponent_pokemon.lose_health(damage)
             else:
@@ -69,40 +76,40 @@ class Pokemon:
 
     #method to add move to available_moves if space, otherwise remove move existing to add move or don't add move
     def add_move(self):
-        if self.level in self.all_moves.keys():
+        if self.level in self.all_moves:
             added_move = self.all_moves[self.level]
+            
             #automatically adds the new move to the available moves if there is space
             if len(self.available_moves) < 4:
                 self.available_moves.append(added_move)
                 print('{0} was added to {1}\'s available moves.'.format(added_move.name, self.name))
+            
             #if there is not enough space, asks user if they want to remove move to add the added_move
             else:
                 remove_to_add = input('\nThere is not enough space in {0}\'s available moves. Would you like to remove one of your current moves to make room for {1}?\nYes [y] or No [n]: '.format(self.name, added_move.name)) 
                 while remove_to_add not in ['y', 'n']:
                     remove_to_add = input('Would you like to remove one of your current moves to make room for {1}?\nYes [y] or No [n]: '.format(added_move.name))
+                
                 #removes one move from available moves and adds the added_move
                 if remove_to_add == 'y':
-                    removed_move = int(input('What move would you like to remove?\n{0} [1], {1} [2], {2} [3], {3} [4]: '.format(self.available_moves[0], self.available_moves[1], self.available_moves[2], self.available_moves[3])))
-                    while removed_move not in [0, 1, 2, 3]:
-                        removed_move = int(input('What move would you like to remove?\n{0} [1], {1} [2], {2} [3], {3} [4]: '.format(self.available_moves[0], self.available_moves[1], self.available_moves[2], self.available_moves[3])))
-                    print('You removed {0} and added {1} to {2}\'s available moves.'.format(self.available_moves[removed_move].name, added_move.name, self.name))
-                    self.available_moves[removed_move] = added_move
+                    removed_move_idx = int(input('What move would you like to remove?\n{0}: '.format(self.avail_moves()))) - 1
+                    while removed_move_idx not in range(3):
+                        removed_move_idx = int(input('What move would you like to remove?\n{0}: '.format(self.avail_moves))) - 1
+                    print('You removed {0} and added {1} to {2}\'s available moves.'.format(self.available_moves[removed_move_idx].name, added_move.name, self.name))
+                    self.available_moves[removed_move_idx] = added_move
+                
                 #does not add the move to the pokemon's available moves
                 else:
                     print('{0} was not added to {1}\'s available moves.'.format(added_move.name, self.name))
 
 
     #helper method for determining best type to attack with
-    def attack_type(self, opponent_pokemon):
-        max_multiplier = 0
+    def type_multiplier(self, opponent_pokemon):
+        multiplier = 1
         for type_self in self.poke_type:
             for type_opp in opponent_pokemon.poke_type:
-                multiple = attack_multiple[type_self][type_opp]
-                if multiple > max_multiplier:
-                    max_multiplier = multiple
-                else:
-                    continue
-        return max_multiplier
+                multiplier *= attack_multiple[type_self][type_opp]
+        return multiplier
 
 
 
@@ -149,5 +156,6 @@ gyarados = Pokemon('Gyarados', 20, 95, ['water', 'flying'], 20, 20, False, {1: [
 
 
 
+charmander.attack(moves.scratch, squirtle)
 
-charizard.attack(moves.scratch, pikachu)
+gyarados.avail_moves()
