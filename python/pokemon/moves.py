@@ -77,4 +77,4 @@ super_potion = Potion('Super Potion', 700, 50)
 
 hyper_potion = Potion('Hyper Potion', 1200, 200)
 
-max_potion = Potion('Max Potion', 2500, 9999)
+max_potion = Potion('Max Potion', 2500, 'full')
