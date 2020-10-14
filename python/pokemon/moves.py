@@ -61,3 +61,20 @@ hyper_beam = Attack('Hyper Beam', 'normal', 'special', 150, 90, 5)
 
 splash = Attack('Splash', 'normal', 'special', 0, 100, 40)
 
+
+
+
+#potions class
+class Potion:
+    def __init__(self, name, price, effect):
+        self.name = name
+        self.price = price
+        self.effect = effect
+
+potion = Potion('Potion', 300, 20)
+
+super_potion = Potion('Super Potion', 700, 50)
+
+hyper_potion = Potion('Hyper Potion', 1200, 200)
+
+max_potion = Potion('Max Potion', 2500, 9999)

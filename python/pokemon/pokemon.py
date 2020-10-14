@@ -6,26 +6,30 @@ import moves, random
 #class for individual pokemon and their characteristics
 class Pokemon:
     #constructor for pokemon attributes
-    def __init__(self, name, level = 1, base_xp = 0, poke_type, max_health, current_health, ko, all_moves):
+    def __init__(self, name, poke_type, max_health, attack_power, defense_power, speed, exp_yield, all_moves, evolve_poke, level = 1):
         self.name = name
-        self.level = level
-        self.base_xp = base_xp
         self.poke_type = poke_type
-        self.max_health = int(max_health * (1 + (self.level-1)//50))
-        self.current_health = current_health
-        self.ko = ko
+        self.ko = False
+        self.attack_power = attack_power
+        self.defense_power = defense_power
+        self.speed = speed
+        self.exp_yield = exp_yield
         self.all_moves = all_moves
+        self.evolve_poke = evolve_poke
+        self.level = level
+        self.max_health = int(max_health * (1 + (self.level-1)//50))
+        self.total_exp = level ** 3
         self.available_moves = []
-        if isinstance(self.all_moves[1], list):
-            self.available_moves += self.all_moves[1]
-        else:
-            self.available_moves = [self.all_moves[1]]
-
+        for key, value in self.all_moves.items():
+            if self.level >= key:
+                self.available_moves.append(value)
 
     #lists available moves
-    def avail_moves(self):
+    def print_avail_moves(self):
+        string = ''
         for i, move in enumerate(self.available_moves, 1):
-            print(str(i) + ': ' + move.name)
+            string += str(i) + ': ' + move.name + '\n'
+        return string
 
 
     #method for health lost from attack, with health bottomed out at 0 hp
@@ -73,7 +77,6 @@ class Pokemon:
                 print("{pokemon_name}'s attack missed!".format(pokemon_name = self.name))
 
 
-
     #method to add move to available_moves if space, otherwise remove move existing to add move or don't add move
     def add_move(self):
         if self.level in self.all_moves:
@@ -82,7 +85,7 @@ class Pokemon:
             #automatically adds the new move to the available moves if there is space
             if len(self.available_moves) < 4:
                 self.available_moves.append(added_move)
-                print('{0} was added to {1}\'s available moves.'.format(added_move.name, self.name))
+                print('{0} learned the move {1}!'.format(self.name, added_move.name))
             
             #if there is not enough space, asks user if they want to remove move to add the added_move
             else:
@@ -92,10 +95,10 @@ class Pokemon:
                 
                 #removes one move from available moves and adds the added_move
                 if remove_to_add == 'y':
-                    removed_move_idx = int(input('What move would you like to remove?\n{0}: '.format(self.avail_moves()))) - 1
+                    removed_move_idx = int(input('What move would you like to remove?\n{0}: '.format(self.print_avail_moves()))) - 1
                     while removed_move_idx not in range(3):
-                        removed_move_idx = int(input('What move would you like to remove?\n{0}: '.format(self.avail_moves))) - 1
-                    print('You removed {0} and added {1} to {2}\'s available moves.'.format(self.available_moves[removed_move_idx].name, added_move.name, self.name))
+                        removed_move_idx = int(input('What move would you like to remove?\n{0}: '.format(self.print_avail_moves))) - 1
+                    print('{0} forgot the move {1} and learned the move {2}.'.format(self.name, self.available_moves[removed_move_idx].name, added_move.name))
                     self.available_moves[removed_move_idx] = added_move
                 
                 #does not add the move to the pokemon's available moves
@@ -112,6 +115,118 @@ class Pokemon:
         return multiplier
 
 
+    #method for gaining exp after opponent pokemon faints
+    def gain_exp(self, opponent_pokemon):
+        #experience gained equation
+        gained_exp = opponent_pokemon.level * opponent_pokemon.exp
+        self.total_exp += gained_exp
+        print('{0} justed gained {1} experience points.'.format(self.name, gained_exp))
+        
+        #run level up method to check if pokemon gained enough experience to level up
+        self.level_up()
+
+
+    #method for leveling up
+    def level_up(self):
+        if self.total_exp > (self.level + 1) ** 3:
+            self.level = self.total_exp ** 1/3
+            print('{0} justed leved up to level {1}!'.format(self.name, self.level))
+            
+            #run evole method to check if pokemon evolved
+            self.evolve()
+            
+            #run add_move method to check if pokemon can learn a new move
+            self.add_move()
+
+
+    #method to evolve pokemon at appropriate level
+    def evolve(self):
+        if self.level >= self.evolve_poke[0]['level']:
+            evolved_poke = self.evolve_poke[0]
+            input_to_evolve = input('{0} is trying to evolve into {1}! Do you want {0} to evolve?\nYes [y] or No [n]: '.format(self.name, evolved_poke['name']))
+            if input_to_evolve == 'y':
+                print('{0} is evolving into {1}!'.format(self.name, evolved_poke['name']))
+                self.name = evolved_poke['name']
+                self.max_health = evolved_poke['max_health']
+                self.attack_power = evolved_poke['attack_power']
+                self.defense_power = evolved_poke['defense_power']
+                self.exp_yield = evolved_poke['exp_yield']
+                self.evolve_poke.pop(0)
+            elif input_to_evolve == 'n':
+                print('{0} didn\'t evolve.'.format(self.name))
+            else:
+                self.evolve()
+            
+
+
+
+
+#bulbasaur class that 
+class Bulbasaur(Pokemon):
+    def __init__(self, level):
+        super().__init__('Bulbasaur', ['grass', 'poison'], 45, 49, 49, 45, 64, {1: moves.tackle, 13: moves.vine_whip, 27: moves.razor_leaf, 48: moves.solar_beam}, [{'name': 'Ivysaur', 'level': 16, 'max_health': 60, 'attack_power': 62, 'defense_power': 63, 'speed': 60, 'exp_yield': 142}, {'name': 'Venusaur', 'level': 32, 'max_health': 80, 'attack_power': 82, 'defense_power': 83, 'speed': 80, 'exp_yield': 236}], level)
+
+
+        self.level = level
+        self.current_health = self.max_health
+        self.ko = False
+
+
+#charmander class that 
+class Charmander(Pokemon):
+    def __init__(self, level):
+        super().__init__('Charmander', ['fire'], 39, 52, 43, 65, 62, {1: moves.scratch, 9: moves.ember, 22: moves.rage, 30: moves.slash, 38: moves.flamethrower, 46: moves.fire_spin}, [{'name': 'Charmeleon', 'level': 16, 'max_health': 58, 'attack_power': 64, 'defense_power': 58, 'speed': 80, 'exp_yield': 142}, {'name': 'Charizard', 'level': 36, 'max_health': 78, 'attack_power': 84, 'defense_power': 78, 'speed': 100,'exp_yield': 240}], level)
+        
+        self.level = level
+        self.current_health = self.max_health
+        self.ko = False
+
+
+#squirtle class that 
+class Squirtle(Pokemon):
+    def __init__(self, level):
+        super().__init__('Squitle', ['water'], 44, 48, 65, 43, 63, {1: moves.tackle, 8: moves.bubble, 15: moves.water_gun, 22: moves.bite, 35: moves.skull_bash, 42: moves.hydro_pump}, [{'name': 'Wartortle', 'level': 16, 'max_health': 59, 'attack_power': 63, 'defense_power': 80, 'speed': 58, 'exp_yield': 142}, {'name': 'Blastoise', 'level': 36, 'max_health': 79, 'attack_power': 83, 'defense_power': 100, 'speed': 78,'exp_yield': 239}], level)
+        
+        self.level = level
+        self.current_health = self.max_health
+        self.ko = False
+
+
+#pikachu class that 
+class Pikachu(Pokemon):
+    def __init__(self, level):
+        super().__init__('Pikachu', ['electric'], 35, 55, 40, 90, 112, {1: moves.thunder_shock, 16: moves.quick_attack, 26: moves.swift, 43: moves.thunder}, [{'name': 'Raichu', 'level': 32, 'max_health': 60, 'attack_power': 90, 'defense_power': 55, 'speed': 110, 'exp_yield': 218}], level)
+        
+        self.level = level
+        self.current_health = self.max_health
+        self.ko = False
+
+
+#snorlax class that 
+class Snorlax(Pokemon):
+    def __init__(self, level):
+        super().__init__('Snorlax', ['normal'], 160, 110, 65, 30, 189, {1: moves.headbutt, 35: moves.body_slam, 48: moves.double_edge, 56: moves.hyper_beam}, [], level)
+        
+        self.level = level
+        self.current_health = self.max_health
+        self.ko = False
+
+
+#magikarp class that 
+class Magikarp(Pokemon):
+    def __init__(self, level):
+        super().__init__('Magikarp', ['water'], 20, 10, 55, 80, 40, {1: moves.splash, 15: moves.tackle, 20: moves.bite, 41: moves.hydro_pump, 52: moves.hyper_beam}, [{'name': 'gyrados', 'level': 20, 'max_health': 95, 'attack_power': 125, 'defense_power': 79, 'speed': 81, 'exp_yield': 189, }], level)
+        
+        self.level = level
+        self.current_health = self.max_health
+        self.ko = False
+
+
+
+    
+
+
+
 
 #dictionary of the attack multiplier for each of the pokemon types.
 attack_multiple = {
@@ -124,38 +239,11 @@ attack_multiple = {
     'flying': {'grass': 2.0, 'poison': 1.0, 'fire': 1.0, 'water': 1.0, 'electric': 0.5, 'normal': 1.0, 'flying': 1.0}
     }
 
-        
-#list of default pokemon
-bulbasaur = Pokemon('Bulbasaur', 1, 64, ['grass', 'poison'], 45, 45, False, {1: moves.tackle, 13: moves.vine_whip, 27: moves.razor_leaf, 48: moves.solar_beam})
 
-ivysaur = Pokemon('Ivysaur', 16, 142, ['grass', 'poison'], 60, 60, False, {1: moves.tackle, 13: moves.vine_whip, 27: moves.razor_leaf, 48: moves.solar_beam})
+#test_bulb = Bulbasaur(1)
 
-venusaur = Pokemon('Venusaur', 32, 236, ['grass', 'poison'], 80, 80, False, {1: moves.tackle, 13: moves.vine_whip, 27: moves.razor_leaf, 48: moves.solar_beam})
+#test_char = Charmander(40)
 
-charmander = Pokemon('Charmander', 1, 62, ['fire'], 39, 39, False, {1: moves.scratch, 9: moves.ember, 22: moves.rage, 30: moves.slash, 38: moves.flamethrower, 46: moves.fire_spin})
+#test_char.attack(moves.scratch, test_bulb)
 
-charmeleon = Pokemon('Charmeleon', 16, 142, ['fire'], 58, 58, False, {1: moves.scratch, 9: moves.ember, 22: moves.rage, 30: moves.slash, 38: moves.flamethrower, 46: moves.fire_spin})
-
-charizard = Pokemon('Charizard', 36, 240, ['fire'], 78, 78, False, {1: moves.scratch, 9: moves.ember, 22: moves.rage, 30: moves.slash, 38: moves.flamethrower, 46: moves.fire_spin})
-
-squirtle = Pokemon('Squirtle', 1, 63, ['water'], 44, 44, False, {1: moves.tackle, 8: moves.bubble, 15: moves.water_gun, 22: moves.bite, 35: moves.skull_bash, 42: moves.hydro_pump})
-
-wartortle = Pokemon('Wartotle', 16, 142, ['water'], 59, 59, False, {1: moves.tackle, 8: moves.bubble, 15: moves.water_gun, 22: moves.bite, 35: moves.skull_bash, 42: moves.hydro_pump})
-
-blastoise = Pokemon('Blastoise', 79, 239, ['water'], 79, 79, False, {1: moves.tackle, 8: moves.bubble, 15: moves.water_gun, 22: moves.bite, 35: moves.skull_bash, 42: moves.hydro_pump})
-
-pikachu = Pokemon('Pikachu', 1, 112, ['electric'], 35, 35, False, {1: moves.thunder_shock, 16: moves.quick_attack, 26: moves.swift, 43: moves.thunder})
-
-raichu = Pokemon('Raichu', 1, 218, ['electric'], 60, 60, False, {1: moves.thunder_shock, 16: moves.quick_attack, 26: moves.swift, 43: moves.thunder})
-
-snorlax = Pokemon('Snorlax', 1, 189, ['normal'], 160, 160, False, {1: moves.headbutt, 35: moves.body_slam, 48: moves.double_edge, 56: moves.hyper_beam})
-
-magikarp = Pokemon('Magikarp', 1, 40, ['water'], 20, 20, False, {1: moves.splash, 15: moves.tackle})
-
-gyarados = Pokemon('Gyarados', 20, 95, ['water', 'flying'], 20, 20, False, {1: [moves.bite, moves.hydro_pump], 52: moves.hyper_beam})
-
-
-
-charmander.attack(moves.scratch, squirtle)
-
-gyarados.avail_moves()
+#test_char.print_avail_moves()
