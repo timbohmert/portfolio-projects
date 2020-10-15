@@ -2,49 +2,39 @@
 
 
 
-
-
-
-
-
-
-
-
 import trainers, pokemon
 
 
+def select_first_pokemon():
+    first_pokemon_idx = int(input('Type in the number of the Pokemon that you would like to chose:\n{0}'.format(pokemon.print_starting_pokemon()))) - 1
+    if first_pokemon_idx < len(pokemon.starting_pokemon) and first_pokemon_idx >= 0:
+        first_pokemon = pokemon.starting_pokemon[first_pokemon_idx]
+        check = input('Are you sure that you would like to select {0} as your first Pokemon?\nY: Yes\nN: No\n'.format(first_pokemon.name))
+        if check == 'Y':
+            return first_pokemon
+    select_first_pokemon()
+
+
+#greeting and profile creation
+print('Hello! Welcome to Pokemon Battle!\n\nLet\'s start by making a profile.\n')
+
+#profile name
+profile_name = input('First, what is your name?\n')
+
+print('Nice to meet you {0}!\n\nNext let\'s choose our first Pokemon.\n'.format(profile_name))
+
+user_first_pokemon = select_first_pokemon()
+
+
+
+
+
+profile = trainers.Trainer(user_first_pokemon, profile_name)
+
+
+
+
 #method tests
-trainers.beth.attack_opp_trainer('water hose', trainers.tim)
-
-trainers.tim.attack_opp_trainer('fire breath', trainers.beth)
-
-trainers.beth.attack_opp_trainer('tackle', trainers.tim)
-
-trainers.beth.attack_opp_trainer('tackle', trainers.tim)
-
-trainers.beth.attack_opp_trainer('tackle', trainers.tim)
-
-trainers.beth.attack_opp_trainer('tackle', trainers.tim)
-
-trainers.tim.attack_opp_trainer('scratch', trainers.beth)
-
-trainers.tim.change_pokemon(pokemon.bulbasaur)
-
-print(trainers.tim.active_pokemon.current_health)
-
-trainers.tim.use_potion('elixir')
-
-trainers.tim.drop_pokemon(pokemon.charmander)
-
-trainers.tim.drop_pokemon(pokemon.charmander)
-
-trainers.tim.add_pokemon(pokemon.charmander)
-
-print(trainers.tim.potions)
-
-print(trainers.tim.active_pokemon.current_health)
-
-trainers.tim.change_pokemon(pokemon.charmander)
 
 
 #Opportunity for increased functionality of the game

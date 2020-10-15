@@ -44,11 +44,13 @@ class Pokemon:
 
     #method for health gained from potion, with health max````ed out at the max health
     def gain_health(self, potion_hp):
-        if self.max_health >= self.current_health + potion_hp:
-            self.current_health += potion_hp
-        else:
+        if potion_hp == 'full' or self.max_health < self.current_health + potion_hp:
+            gain = self.max_health - self.current_health
             self.current_health = self.max_health
-        print('{name} now has {current_health}hp.'.format(name = self.name, current_health = self.current_health))
+        else:
+            gain = potion_hp
+            self.current_health += potion_hp
+        print('{0} gained {1} hp and now has {2} hp.'.format(self.name, gain, self.current_health))
 
 
     #method for ko status
@@ -223,10 +225,6 @@ class Magikarp(Pokemon):
 
 
 
-    
-
-
-
 
 #dictionary of the attack multiplier for each of the pokemon types.
 attack_multiple = {
@@ -238,6 +236,24 @@ attack_multiple = {
     'normal': {'grass': 1.0, 'poison': 1.0, 'fire': 1.0, 'water': 1.0, 'electric': 1.0, 'normal': 1.0, 'flying': 1.0}, 
     'flying': {'grass': 2.0, 'poison': 1.0, 'fire': 1.0, 'water': 1.0, 'electric': 0.5, 'normal': 1.0, 'flying': 1.0}
     }
+
+
+
+start_bulbasaur = Bulbasaur(1)
+start_charmander = Charmander(1)
+start_squirtle = Squirtle(1)
+
+
+starting_pokemon = [start_bulbasaur, start_charmander, start_squirtle]
+
+def print_starting_pokemon():
+    list = ''
+    for i, pokemon in enumerate(starting_pokemon, 1):
+        list += '{0}: {1}\n'.format(i, pokemon.name)
+    return list
+
+
+
 
 
 #test_bulb = Bulbasaur(1)
