@@ -11,6 +11,8 @@ class Attack:
         self.accuracy = accuracy
         self.pp = pp
 
+    tim = 'Hello my name is Tim'
+
 #list of attack type moves
 
 tackle = Attack('Tackle', 'normal', 'physical', 40, 100, 35)

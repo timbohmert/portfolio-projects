@@ -36,7 +36,7 @@ class Pokemon:
     def lose_health(self, damage):
         if 0 <= self.current_health - damage:
             self.current_health -= damage
-            print('{name} now has {current_health}hp.'.format(name = self.name, current_health = self.current_health))
+            print('{0} now has {1}hp.'.format(self.name, self.current_health))
         else:
             self.current_health = 0
             self.ko_status()
@@ -57,7 +57,7 @@ class Pokemon:
     def ko_status(self):
         if self.current_health == 0:
             self.ko = True
-            print("{name} is knocked out and can no longer battle.".format(name = self.name))
+            print("{0} is knocked out and can no longer battle.".format(self.name))
         else: 
             self.ko = False
 
@@ -73,10 +73,10 @@ class Pokemon:
                 attack_power = selected_attack.power
                 attack_multiplier = self.type_multiplier(opponent_pokemon)
                 damage = int(((self.level * 2/5 + 2) * attack_power//50 + 2) * attack_multiplier)
-                print("{pokemon_name}'s attack did {damage} damage to {opponent_pokemon}.".format(pokemon_name = self.name, damage = damage, opponent_pokemon = opponent_pokemon.name))
+                print("{0}'s attack did {1} damage to {2}.".format(self.name, damage, opponent_pokemon.name))
                 return opponent_pokemon.lose_health(damage)
             else:
-                print("{pokemon_name}'s attack missed!".format(pokemon_name = self.name))
+                print("{0}'s attack missed!".format(self.name))
 
 
     #method to add move to available_moves if space, otherwise remove move existing to add move or don't add move
@@ -106,15 +106,6 @@ class Pokemon:
                 #does not add the move to the pokemon's available moves
                 else:
                     print('{0} was not added to {1}\'s available moves.'.format(added_move.name, self.name))
-
-
-    #helper method for determining best type to attack with
-    def type_multiplier(self, opponent_pokemon):
-        multiplier = 1
-        for type_self in self.poke_type:
-            for type_opp in opponent_pokemon.poke_type:
-                multiplier *= attack_multiple[type_self][type_opp]
-        return multiplier
 
 
     #method for gaining exp after opponent pokemon faints
@@ -159,6 +150,16 @@ class Pokemon:
             else:
                 self.evolve()
             
+
+    #helper method for type multiplier during attack
+    def type_multiplier(self, opponent_pokemon):
+        multiplier = 1
+        for type_self in self.poke_type:
+            for type_opp in opponent_pokemon.poke_type:
+                multiplier *= attack_multiple[type_self][type_opp]
+        return multiplier
+
+
 
 
 
@@ -238,11 +239,10 @@ attack_multiple = {
     }
 
 
-
+#objects of starting pokemon that a new user can chose from
 start_bulbasaur = Bulbasaur(1)
 start_charmander = Charmander(1)
 start_squirtle = Squirtle(1)
-
 
 starting_pokemon = [start_bulbasaur, start_charmander, start_squirtle]
 
@@ -256,10 +256,11 @@ def print_starting_pokemon():
 
 
 
-#test_bulb = Bulbasaur(1)
+#test_bulb = Bulbasaur(23)
 
 #test_char = Charmander(40)
 
 #test_char.attack(moves.scratch, test_bulb)
+#test_bulb.attack(moves.tackle, test_char)
 
 #test_char.print_avail_moves()
