@@ -4,7 +4,7 @@
 
 import trainers, pokemon
 
-
+#function for selecting the first pokemon upon profile creation
 def select_first_pokemon():
     first_pokemon_idx = int(input('Type in the number of the Pokemon that you would like to chose:\n{0}'.format(pokemon.print_starting_pokemon()))) - 1
     if first_pokemon_idx < len(pokemon.starting_pokemon) and first_pokemon_idx >= 0:
@@ -13,6 +13,32 @@ def select_first_pokemon():
         if check == 'Y':
             return first_pokemon
     select_first_pokemon()
+
+
+#helper method to print out the trainers
+def print_opp_trainers(opponent_trainers):
+    list = ''
+    for i, trainer in enumerate(opponent_trainers, 1):
+        list += '{0}: {1}\n'.format(i, trainer.name)
+    return list
+
+
+#method to select opponent trainer to battle. Should this go onto script file?
+def select_opp_trainer(opponent_trainers):
+    opponent_trainer_idx = input('What trainer would you like to battle:\n{0}'.format(print_opp_trainers(opponent_trainers))) - 1
+    opponent_trainer = opponent_trainers[opponent_trainer_idx]
+    check = input('Are you sure that you would like to battle {0}?\nY: Yes\nN: No\n'.format(opponent_trainer.name))
+    if check == 'Y':
+        return 
+
+
+#function for battling another trainer that 
+def pokemon_battle(name):
+    pass
+
+        
+
+
 
 
 #greeting and profile creation
@@ -29,8 +55,12 @@ user_first_pokemon = select_first_pokemon()
 
 
 
-profile = trainers.Trainer(user_first_pokemon, profile_name)
+profile = trainers.User_Trainer(user_first_pokemon, profile_name)
 
+def sum_two_num(num1, num2):
+    return num1 + num2
+
+sum_two_num(1, 2)
 
 
 
