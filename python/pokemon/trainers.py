@@ -15,6 +15,7 @@ class Trainer():
         self.potions = potions
         self.active_pokemon = self.pokemon[0]
         self.battle_status = True
+        self.storage = []
 
 
     #method for using a potion on the active pokemon. Prints out name of potion used and the hp it will give with the active pokemon
@@ -38,6 +39,16 @@ class Trainer():
         print('{0} made {1} their active pokemon.'.format(self.name, diff_pokemon.name))
         self.active_pokemon = diff_pokemon
 
+
+    #method to check if the trainer still has pokemon to battle
+    def check_battle_status(self):
+        self.battle_status = False
+        for poke in self.pokemon:
+            if poke.ko == False:
+                self.battle_status = True
+                return self.battle_status
+
+
     #method for adding pokemon to available pokemon
     def add_pokemon(self, new_pokemon):
         if len(self.pokemon) < 6:
@@ -48,23 +59,18 @@ class Trainer():
 
 
     #method for dropping pokemon from available pokemon
-    def drop_pokemon(self, drop_pokemon):
-        if drop_pokemon in self.pokemon:
-            drop_index = self.pokemon.index(drop_pokemon)
-            self.pokemon.pop(drop_index)
-            print('{trainer_name} dropped {drop_pokemon} from their available Pokemon.'.format(trainer_name = self.name, drop_pokemon = drop_pokemon.name))
-        else:
-            print('{trainer_name} is not carrying {drop_pokemon} and cannot be dropped from available Pokemon.'.format(trainer_name = self.name, drop_pokemon = drop_pokemon.name))
+    def drop_pokemon(self, poke_to_drop_idx):
+        print('{0} dropped {1} from their available Pokemon and was put into storage.'.format(self.name, self.pokemon[poke_to_drop_idx].name))
+        poke_to_drop = self.pokemon.pop(poke_to_drop_idx)
+        self.storage.append(poke_to_drop)
     
 
 #class for pokemon trainers
 class User_Trainer(Trainer): 
     
     #constructor method for trainer attributes of list of available pokemon, name of the trainer, dictionary of their potions, and the active pokemon
-    def __init__(self, pokemon, name, potions = []):
-        self.pokemon = pokemon
-        self.name = name
-        self.potions = potions
+    def __init__(self, pokemon, name, potions):
+        super().__init__(pokemon, name, potions)
         self.active_pokemon = self.pokemon[0]
         self.battle_status = True
 
@@ -100,24 +106,17 @@ class User_Trainer(Trainer):
             self.select_pokemon()
 
 
-    #method to check if the trainer still has pokemon to battle
-    def check_battle_status(self):
-        self.battle_status = False
-        for poke in self.pokemon:
-            if poke.ko == False:
-                self.battle_status = True
-                return self.battle_status
-
-
     #method for selecting action during battling 
     def battle_turn(self, opponent_trainer):
         if self.active_pokemon.ko == False:
-            move = input('Select the number of what you would like to do next:\n1: Attack\n2: Use item\n3: Switch pokemon\n')
-            if move == '1':
+            move = int(input('Select the number of what you would like to do next:\n1: Attack\n2: Use item\n3: Switch pokemon\n'))
+            if move not in range(1, 4):
+                self.battle_turn(opponent_trainer)
+            if move == 1:
                 self.selected_attack(opponent_trainer)
-            if move == '2':
+            if move == 2:
                 self.select_potion()
-            if move == '3':
+            if move == 3:
                 self.select_pokemon()
         else:
             print('{0} is knocked out and unable to attack.'.format(self.active_pokemon.name))
@@ -137,31 +136,29 @@ class User_Trainer(Trainer):
 
 
     #method for adding pokemon to available pokemon
-    def add_pokemon(self, new_pokemon, storage = False):
+    def add_pokemon(self, new_pokemon, avail_storage = False):
         if len(self.pokemon) < 6:
             print("{0} has been added to {1}'s available Pokemon.".format(new_pokemon.name, self.name))
             return self.pokemon.append(new_pokemon)
         else:
-            if storage == True:
+            if avail_storage == True:
                 print('{0} has too many Pokemon and needs to drop one before adding {1} or it will be sent to storage.'.format(self.name, new_pokemon.name))
                 drop_y_n = input('Would you like to drop a Pokemon to make room for {0}\nY: Yes\nN: No\n'.format(new_pokemon.name))
                 if drop_y_n == 'Y':
-                    self.drop_pokemon(storage)
+                    self.select_drop_pokemon()
                     self.add_pokemon(new_pokemon)
             else:
                 print('{0} is carrying too many Pokemon and {1} was sent to storage.'.format(self.name, new_pokemon.name))
-                storage.append(new_pokemon)        
+                self.storage.append(new_pokemon)        
 
    
     #method for dropping pokemon from available pokemon
-    def drop_pokemon(self, storage):
+    def select_drop_pokemon(self):
         poke_to_drop_idx = int(input('Select the number of the Pokemon that you would like to drop:\n{0}'.format(self.print_pokemon()))) - 1
         if poke_to_drop_idx < len(self.pokemon) and poke_to_drop_idx >= 0:
             check = input('Are you sure that you would like to drop {0}?\nY: Yes\nN: No\n'.format(self.pokemon[poke_to_drop_idx].name))
             if check == 'Y':
-                print('{0} dropped {1} from their available Pokemon and was put into storage.'.format(self.name, self.pokemon[poke_to_drop_idx].name))
-                poke_to_drop = self.pokemon.pop(poke_to_drop_idx)
-                storage.append(poke_to_drop)
+                self.drop_pokemon(poke_to_drop_idx)
 
 
     #helper method to print the potions that the user has
@@ -182,64 +179,40 @@ class User_Trainer(Trainer):
 
 
 
-
-
 #class for opponent trainers that inherits trainer class
 class Opponent_Trainer(Trainer):
     #constructor method that takes in list of opponent trainer's pokemon, name, potions, active
-    def __init__(self, pokemon, name, potions, move_sequence = [[]]):
-        self.pokemon = pokemon
-        self.name = name
-        self.potions = potions
+    def __init__(self, pokemon, name, potions, move_sequence):
+        super().__init__(pokemon, name, potions)
         self.active_pokemon = self.pokemon[0]
+        self.battle_status = True
         self.move_sequence = move_sequence
 
 
-    #method for using a potion on the active pokemon. Prints out name of potion used and the hp it will give with the active pokemon
-    def use_potion(self, potion):
-        potion_hp = self.potions[potion]
-        print('{0} used {1} on {2} and gained {3}hp.'.format(self.name, potion, self.active_pokemon.name, potion_hp))
-        self.active_pokemon.gain_health(potion_hp)
-        self.potions.pop(potion)
-    
+    #method to select move from move_sequence
+    def select_move(self):
+        return 0
 
-    #method for attacking opponent trainer's active pokemon with trainer's active pokemon. Prints out name of attach
-    def attack_opp_trainer(self, opponent_trainer, selected_attack_idx):
+
+    #method for selecting action during battling 
+    def battle_turn(self, opponent_trainer):
         if self.active_pokemon.ko == False:
-            selected_attack = self.active_pokemon.available_moves[selected_attack_idx]
-            print('{0} told {1} to use {2}.'.format(self.name, self.active_pokemon.name, selected_attack.name))
-            self.active_pokemon.attack(selected_attack, opponent_trainer.active_pokemon)
+            move = self.select_move()
+            if move == 1:
+                self.attack_opp_trainer(opponent_trainer, selected_attack_idx)
+            if move == 2:
+                self.use_potion(potion)
+            if move == 3:
+                self.change_pokemon(diff_pokemon)
         else:
             print('{0} is knocked out and unable to attack.'.format(self.active_pokemon.name))
+            self.check_battle_status()
+            if self.battle_status == True:
+                self.change_pokemon(diff_pokemon)
+                self.battle_turn(opponent_trainer)
+            else:
+                print('All of {0}\'s Pokemon are knocked out. {0} lost the battle.'.format(self.name))
 
-
-    #method for changing active pokemon with one of available six pokemon
-    def change_pokemon(self, diff_pokemon):
-        if diff_pokemon in self.pokemon and diff_pokemon.ko == False:
-            print('{trainer_name} made {pokemon_name} their active pokemon.'.format(trainer_name = self.name, pokemon_name = diff_pokemon.name))
-            self.active_pokemon = diff_pokemon
-        else:
-            print('{pokemon_name} is not available.'.format(pokemon_name = diff_pokemon.name))
-
-
-    #method for adding pokemon to available pokemon
-    def add_pokemon(self, new_pokemon):
-        if len(self.pokemon) < 6:
-            print("{new_pokemon} has been added to {trainer_name}'s available Pokemon.".format(new_pokemon = new_pokemon.name, trainer_name = self.name))
-            return self.pokemon.append(new_pokemon)
-        else:
-            print('{trainer_name} has too many Pokemon and needs to drop one before adding {new_pokemon}.'.format(trainer_name = self.name, new_pokemon = new_pokemon))
-
-
-    #method for dropping pokemon from available pokemon
-    def drop_pokemon(self, drop_pokemon):
-        if drop_pokemon in self.pokemon:
-            drop_index = self.pokemon.index(drop_pokemon)
-            self.pokemon.pop(drop_index)
-            print('{trainer_name} dropped {drop_pokemon} from their available Pokemon.'.format(trainer_name = self.name, drop_pokemon = drop_pokemon.name))
-        else:
-            print('{trainer_name} is not carrying {drop_pokemon} and cannot be dropped from available Pokemon.'.format(trainer_name = self.name, drop_pokemon = drop_pokemon.name))
-    
 
 
 
@@ -249,24 +222,25 @@ class Opponent_Trainer(Trainer):
 
 test_pikachu = pokemon.Pikachu(40)
 test_bulb = pokemon.Bulbasaur(1)
+test_char = pokemon.Charmander(1)
+test_squir = pokemon.Squirtle(1)
+test_karp = pokemon.Magikarp(1)
+test_snor = pokemon.Snorlax(1)
+test_bulb2 = pokemon.Bulbasaur(1)
 
 #default trainer objects
-ash = User_Trainer([test_pikachu, test_bulb], "Ash", [moves.potion, moves.super_potion, moves.hyper_potion, moves.max_potion])
-
-
-opp_trainers = []
+ash = User_Trainer([test_pikachu], "Ash", [moves.potion, moves.super_potion, moves.hyper_potion, moves.max_potion])
 
 beth = Opponent_Trainer([test_bulb, test_pikachu], "Beth", [moves.potion, moves.max_potion])
 
-storage_1 = [[]]
+ash.add_pokemon(test_bulb)
+ash.add_pokemon(test_char)
+ash.add_pokemon(test_karp)
+ash.add_pokemon(test_snor)
+ash.add_pokemon(test_squir)
+ash.add_pokemon(test_bulb2)
 
-ash.add_pokemon(test_bulb)
-ash.add_pokemon(test_bulb)
-ash.add_pokemon(test_bulb)
-ash.add_pokemon(test_bulb)
-ash.add_pokemon(test_bulb, storage_1)
 
-print(ash.active_pokemon.name)
 
 ash.select_pokemon()
 

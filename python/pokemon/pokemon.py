@@ -6,7 +6,7 @@ import moves, random
 #class for individual pokemon and their characteristics
 class Pokemon:
     #constructor for pokemon attributes
-    def __init__(self, name, poke_type, max_health, attack_power, defense_power, speed, exp_yield, all_moves, evolve_poke, level = 1):
+    def __init__(self, name, poke_type, max_health, attack_power, defense_power, speed, exp_yield, all_moves, evolve_poke, level):
         self.name = name
         self.poke_type = poke_type
         self.ko = False
