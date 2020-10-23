@@ -69,10 +69,9 @@ class Trainer():
 class User_Trainer(Trainer): 
     
     #constructor method for trainer attributes of list of available pokemon, name of the trainer, dictionary of their potions, and the active pokemon
-    def __init__(self, pokemon, name, potions):
-        super().__init__(pokemon, name, potions)
-        self.active_pokemon = self.pokemon[0]
-        self.battle_status = True
+    def __init__(self, pokemon, name):
+        super().__init__(pokemon, name, [])
+        self.wallet = 500
 
 
     #method for using a potion on the active pokemon. Prints out name of potion used and the hp it will give with the active pokemon
@@ -161,6 +160,28 @@ class User_Trainer(Trainer):
                 self.drop_pokemon(poke_to_drop_idx)
 
 
+    #function to buy potion
+    def buy_item(self, store):
+        selected_potion_idx = int(input('Select the number of the item that you would like to buy\n{0}'.format(self.print_store_items(store)))) - 1
+        selected_potion =store[selected_potion_idx]
+        if selected_potion.price <= self.wallet:
+            check = input('Are you sure that you would like to buy {0}?\nY: Yes\nN: No\n'.format(selected_potion.name))
+            if check == 'Y':
+                print('You just added {0} to your items!'.format(selected_potion.name))
+                self.potions.append(selected_potion)
+                self.wallet -= selected_potion.price
+                print('You now have ${0} in your wallet.'.format(self.wallet))
+                check = input('Would you like to buy a different item?\nY: Yes\nN: No\n')
+                if check == 'Y':
+                    self.buy_item(store)
+        else:
+            print('You don\'t have enough money for {0}'.format(selected_potion.name))
+            check = input('Would you like to buy a different item?\nY: Yes\nN: No\n')
+            if check == 'Y':
+                self.buy_item(store)
+            
+
+
     #helper method to print the potions that the user has
     def print_potions(self):
         list = ''
@@ -177,6 +198,14 @@ class User_Trainer(Trainer):
         return list
 
 
+    #helper method to print out the items in a store
+    def print_store_items(self, store):
+        list = ''
+        for i, item in enumerate(store, 1):
+            list += '{0}: {1} - ${2}\n'.format(i, item.name, item.price)
+        return list
+
+
 
 
 #class for opponent trainers that inherits trainer class
@@ -184,8 +213,6 @@ class Opponent_Trainer(Trainer):
     #constructor method that takes in list of opponent trainer's pokemon, name, potions, active
     def __init__(self, pokemon, name, potions, move_sequence):
         super().__init__(pokemon, name, potions)
-        self.active_pokemon = self.pokemon[0]
-        self.battle_status = True
         self.move_sequence = move_sequence
 
 
@@ -214,6 +241,7 @@ class Opponent_Trainer(Trainer):
                 print('All of {0}\'s Pokemon are knocked out. {0} lost the battle.'.format(self.name))
 
 
+####Need to create structure for the move_sequence. Thinking to create dictionaries for each pokemon, and then dictionary for each turn with key:value for attack, potion, or change pokemon. Need to think about how to create smart selection of when to use potion with a lot of damage, or when to change to different pokemon if the multiplier is not good. Should we use unique data structure for finding the right move?
 
 
 
@@ -229,9 +257,11 @@ test_snor = pokemon.Snorlax(1)
 test_bulb2 = pokemon.Bulbasaur(1)
 
 #default trainer objects
-ash = User_Trainer([test_pikachu], "Ash", [moves.potion, moves.super_potion, moves.hyper_potion, moves.max_potion])
+ash = User_Trainer([test_pikachu], "Ash")
 
-beth = Opponent_Trainer([test_bulb, test_pikachu], "Beth", [moves.potion, moves.max_potion])
+ash.potions = [moves.potion, moves.super_potion, moves.hyper_potion, moves.max_potion]
+
+beth = Opponent_Trainer([test_bulb, test_pikachu], "Beth", [moves.potion, moves.max_potion], [])
 
 ash.add_pokemon(test_bulb)
 ash.add_pokemon(test_char)

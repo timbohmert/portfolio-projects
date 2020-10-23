@@ -2,7 +2,7 @@
 
 
 
-import trainers, pokemon
+import trainers, pokemon, moves
 
 #function for selecting the first pokemon upon profile creation
 def select_first_pokemon():
@@ -11,8 +11,26 @@ def select_first_pokemon():
         first_pokemon = pokemon.starting_pokemon[first_pokemon_idx]
         check = input('Are you sure that you would like to select {0} as your first Pokemon?\nY: Yes\nN: No\n'.format(first_pokemon.name))
         if check == 'Y':
+            print('Aweseome! You chose {0} as your first Pokemon!'.format(first_pokemon.name))
             return first_pokemon
     select_first_pokemon()
+
+
+#helper method to print out the items in a store
+def print_store_items(store):
+    list = ''
+    for i, item in enumerate(store, 1):
+        list += '{0}: {1} - ${2}\n'.format(i, item.name, item.price)
+    return list
+
+
+#function to buy potion
+def buy_potion(store):
+    selected_potion_idx = int(input('Select the number of the potion that you would like to buy\n{0}'.format(print_store_items(store))))
+    check = input('Are you sure that you would like to buy {0}?\nY: Yes\nN: No\n'.format(store[selected_potion_idx].name))
+    if check == 'Y':
+        return 
+
 
 
 #helper method to print out the trainers
@@ -38,6 +56,10 @@ def pokemon_battle(name):
 
         
 
+#stores
+
+starting_store = [moves.potion, moves.super_potion]
+
 
 
 
@@ -47,20 +69,23 @@ print('Hello! Welcome to Pokemon Battle!\n\nLet\'s start by making a profile.\n'
 #profile name
 profile_name = input('First, what is your name?\n')
 
+#create user profile
+profile = trainers.User_Trainer([0], profile_name)
+
+
+#select first pokemon
 print('Nice to meet you {0}!\n\nNext let\'s choose our first Pokemon.\n'.format(profile_name))
-
 user_first_pokemon = select_first_pokemon()
+profile.add_pokemon(user_first_pokemon)
 
 
+#select any potions
+print('Wow, your grandpa put ${0} in your wallet!'.format(profile.wallet))
+check = input('Next, would you like to go to the store to buy any potions\nY: Yes\nN: No\n')
+if check == 'Y':
+    profile.buy_item(starting_store)
 
 
-
-profile = trainers.User_Trainer(user_first_pokemon, profile_name)
-
-def sum_two_num(num1, num2):
-    return num1 + num2
-
-sum_two_num(1, 2)
 
 
 
@@ -72,3 +97,5 @@ sum_two_num(1, 2)
 # • Create specific Classes that inherit from the general Pokémon class. For example, could you create a Charmander class that has all of the functionality of a Pokémon plus some extra features?
 # • Let your Pokémon evolve once they hit a certain level.
 # • Have more stats associated with a Pokémon. In the real game, every Pokémon has stats like Speed, Attack, Defense. All of those stats effect the way Pokemon battle with each other. For example, the Pokémon with the larger Speed stat will go first in the battle.
+
+print_store_items(starting_store)
