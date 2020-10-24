@@ -16,43 +16,7 @@ def select_first_pokemon():
     select_first_pokemon()
 
 
-#helper method to print out the items in a store
-def print_store_items(store):
-    list = ''
-    for i, item in enumerate(store, 1):
-        list += '{0}: {1} - ${2}\n'.format(i, item.name, item.price)
-    return list
-
-
-#function to buy potion
-def buy_potion(store):
-    selected_potion_idx = int(input('Select the number of the potion that you would like to buy\n{0}'.format(print_store_items(store))))
-    check = input('Are you sure that you would like to buy {0}?\nY: Yes\nN: No\n'.format(store[selected_potion_idx].name))
-    if check == 'Y':
-        return 
-
-
-
-#helper method to print out the trainers
-def print_opp_trainers(opponent_trainers):
-    list = ''
-    for i, trainer in enumerate(opponent_trainers, 1):
-        list += '{0}: {1}\n'.format(i, trainer.name)
-    return list
-
-
-#method to select opponent trainer to battle. Should this go onto script file?
-def select_opp_trainer(opponent_trainers):
-    opponent_trainer_idx = input('What trainer would you like to battle:\n{0}'.format(print_opp_trainers(opponent_trainers))) - 1
-    opponent_trainer = opponent_trainers[opponent_trainer_idx]
-    check = input('Are you sure that you would like to battle {0}?\nY: Yes\nN: No\n'.format(opponent_trainer.name))
-    if check == 'Y':
-        return 
-
-
-#function for battling another trainer that 
-def pokemon_battle(name):
-    pass
+    
 
         
 
@@ -70,20 +34,21 @@ print('Hello! Welcome to Pokemon Battle!\n\nLet\'s start by making a profile.\n'
 profile_name = input('First, what is your name?\n')
 
 #create user profile
-profile = trainers.User_Trainer([0], profile_name)
+profile = trainers.User_Trainer(profile_name)
 
 
 #select first pokemon
-print('Nice to meet you {0}!\n\nNext let\'s choose our first Pokemon.\n'.format(profile_name))
+print('Nice to meet you, {0}!\n\nNext let\'s choose our first Pokemon.\n'.format(profile_name))
 user_first_pokemon = select_first_pokemon()
 profile.add_pokemon(user_first_pokemon)
 
 
 #select any potions
-print('Wow, your grandpa put ${0} in your wallet!'.format(profile.wallet))
+print('Wow, your grandparents put ${0} in their wallet!'.format(profile.wallet))
 check = input('Next, would you like to go to the store to buy any potions\nY: Yes\nN: No\n')
 if check == 'Y':
     profile.buy_item(starting_store)
+
 
 
 
@@ -97,5 +62,3 @@ if check == 'Y':
 # • Create specific Classes that inherit from the general Pokémon class. For example, could you create a Charmander class that has all of the functionality of a Pokémon plus some extra features?
 # • Let your Pokémon evolve once they hit a certain level.
 # • Have more stats associated with a Pokémon. In the real game, every Pokémon has stats like Speed, Attack, Defense. All of those stats effect the way Pokemon battle with each other. For example, the Pokémon with the larger Speed stat will go first in the battle.
-
-print_store_items(starting_store)
