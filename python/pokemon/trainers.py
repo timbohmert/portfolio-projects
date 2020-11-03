@@ -192,7 +192,7 @@ class User_Trainer(Trainer):
     def add_pokemon(self, new_pokemon, avail_storage = False):
         if len(self.pokemon) < 6:
             print("{0} has been added to {1}'s available Pokemon.".format(new_pokemon.name, self.name))
-            return self.pokemon.append(new_pokemon)
+            self.pokemon += [new_pokemon]
         else:
             if avail_storage == True:
                 print('{0} has too many Pokemon and needs to drop one before adding {1} or it will be sent to storage.'.format(self.name, new_pokemon.name))
@@ -318,15 +318,15 @@ test_snor = pokemon.Snorlax(1)
 test_bulb2 = pokemon.Bulbasaur(1)
 
 #default trainer objects
-ash = User_Trainer("Ash")
+#ash = User_Trainer("Ash")
 
-ash.potions = [moves.potion, moves.super_potion, moves.hyper_potion, moves.max_potion]
+#ash.potions = [moves.potion, moves.super_potion, moves.hyper_potion, moves.max_potion]
 
 beth = Opponent_Trainer([test_bulb], "Beth", [moves.potion, moves.max_potion], [])
 tim = Opponent_Trainer([test_bulb2], "Tim", [moves.potion, moves.max_potion], [])
 
 #ash.add_pokemon(test_pikachu)
-ash.add_pokemon(test_bulb)
+#ash.add_pokemon(test_bulb)
 #ash.add_pokemon(test_char)
 #ash.add_pokemon(test_karp)
 #ash.add_pokemon(test_snor)
@@ -343,5 +343,6 @@ ash.add_pokemon(test_bulb)
 
 #ash.battle_turn(beth)
 
-beth.pokemon_battle(tim)
-beth.pokemon_battle(tim)
+#beth.pokemon_battle(tim)
+#beth.pokemon_battle(tim)
+

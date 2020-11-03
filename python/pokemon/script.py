@@ -23,6 +23,7 @@ def select_first_pokemon():
 #stores
 
 starting_store = [moves.potion, moves.super_potion]
+opponent_trainers = [trainers.beth, trainers.tim]
 
 
 
@@ -32,6 +33,7 @@ print('Hello! Welcome to Pokemon Battle!\n\nLet\'s start by making a profile.\n'
 
 #profile name
 profile_name = input('First, what is your name?\n')
+
 
 #create user profile
 profile = trainers.User_Trainer(profile_name)
@@ -48,6 +50,13 @@ print('Wow, your grandparents put ${0} in their wallet!'.format(profile.wallet))
 check = input('Next, would you like to go to the store to buy any potions\nY: Yes\nN: No\n')
 if check == 'Y':
     profile.buy_item(starting_store)
+
+
+#select 
+print('Great! You are all set.')
+check = input('Would you like to battle next?\nY: Yes\nN: No\n')
+if check == 'Y':
+    profile.select_battle_opp(opponent_trainers)
 
 
 
